@@ -1,0 +1,12 @@
+### Emacs ###
+*.*~
+[#]*[#]
+.\#*
+.[#]*
+
+### Org mode ###
+*_archive
+
+
+### Symlinks ###
+.bashrc

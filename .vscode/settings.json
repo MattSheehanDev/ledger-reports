@@ -1,0 +1,16 @@
+{  
+    "files.exclude": {
+        "**/.hg": true,
+        "**/.vs": true,
+        "**/.vscode": false,
+        "**/.hgignore": true,
+        "**/.hgsub": true,
+        "**/.hgsubstate": true,
+        "**/*.sln": true,
+        "**/*.csproj": true,
+        "**/*.csproj.user": true
+    },
+
+    "search.exclude": {
+    }
+}

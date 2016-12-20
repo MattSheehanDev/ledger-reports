@@ -1,0 +1,35 @@
+#!/bin/bash
+
+
+# --exchange (-X) is similar to --market except it does not honor primary or secondary commodities (p.38).
+
+# --now defines the current date in case you want to calculate in the past or future. This is useful
+# for when using --market or --exchange to value the commodities as of that date.
+# The default VALUE property for every commodity is
+# = expr commodity == "commodity"
+#     ; VALUE:: market(amount, date, exchange)
+# where date is either today's date or the date defined by --now
+# and exchange is either the primary commodity for the transaction or the value defined by --exchange.
+# --now is useful with --current (-c) to limit the transactions to postings with dates <= to the date defined
+# by --now.
+
+echo -n -e $startBlue"Starting net worth report..."$endColor
+# net worth report should be cumulative up to and including the reporting month
+ledger bal ^Assets ^Liabilities -p monthly until $until_date --now $now_date --current \
+> $month_dir"net-worth.txt"
+# ledger bal ^Assets ^Liabilities --display "date<[$year/$until_month/01]" > $month_dir"net-worth.txt"
+
+check_last_result
+echo -e $startGreenBold"DONE"$endColor
+
+
+echo -n -e $startBlue"Starting net worth market value report..."$endColor
+# same as net worth report except with terms of USD
+ledger bal ^Assets ^Liabilities --exchange $ --price-db $LEDGER_PRICES --now $now_date --current \
+-p monthly until $until_date > $month_dir"net-worth-market.txt"
+
+check_last_result
+echo -e $startGreenBold"DONE"$endColor
+
+
+exit 0

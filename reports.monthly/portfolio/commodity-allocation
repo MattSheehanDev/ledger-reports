@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# ledger bal ^Allocation --price-db $LEDGER_PRICE_DB \
+# -p monthly until $until_date --market --format "\
+
+# exchange is similar to market but instead of honoring primary and secondary
+# commodities, it forces an exchange to a specific commodity.
+
+echo -n -e $startBlue"Starting commodity allocation report..."$endColor
+echo "ALLOCATION - TOTAL" > "${investments_dir}commodity-allocation.txt"
+echo "----------------------------------------" >> "${investments_dir}commodity-allocation.txt"
+# commodity allocation should be cumulative through reporting month
+ledger bal ^Allocation --price-db $LEDGER_PRICES \
+-e $until_date -X $ --now $now_date -c --format "\
+%12(market(display_total, date, '$'))\
+%12(percent(market(display_total, date, exchange), market(parent.total, date, exchange)))\
+\t\
+%-18((depth_spacer)+(partial_account))\r\n\
+%/" \
+>> $investments_dir"commodity-allocation.txt"
+
+check_last_result
+echo -e $startGreenBold"DONE"$endColor
+
+echo -e "\r\n" >> "${investments_dir}commodity-allocation.txt"
+
+echo -n -e "${startBlue}Starting commodity allocation report (securities only)..."
+echo "ALLOCATION - SECURITIES ONLY" >> "${investments_dir}commodity-allocation.txt"
+echo "----------------------------------------" >> "${investments_dir}commodity-allocation.txt"
+# exclude any cash
+ledger bal ^Allocation and not Allocation:Cash -X $ --now $now_date --current \
+--price-db $LEDGER_PRICES --format "\
+%12(market(display_total, date, '$'))\
+%12(percent(market(display_total, date, exchange), market(parent.total, date, exchange)))\
+\t\
+%-18((depth_spacer)+(partial_account))\r\n\
+%/" \
+>> "${investments_dir}commodity-allocation.txt"
+
+check_last_result
+echo -e "${startGreenBold}DONE${endColor}"
+
+
+exit 0
