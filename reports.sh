@@ -53,7 +53,7 @@ export until_date=$until_year/$until_month/01
 #
 # Create directory structure
 #
-. "$HOME/Dropbox/journals/finances/accounting/scripts/directory.sh"
+. "$HOME/Dropbox/projects/ledger-reports/directory.sh"
 
 
 
@@ -62,7 +62,7 @@ export until_date=$until_year/$until_month/01
 ## run each executable in the reports.monthly directory,
 ## including subdirectories
 ##
-for i in $(find /home/matt/Dropbox/journals/finances/accounting/scripts/reports.monthly); do
+for i in $(find /home/matt/Dropbox/projects/ledger-reports/reports.monthly); do
   if [[ -d "$i" ]]; then
     run-parts --exit-on-error --new-session "$i"
   fi
