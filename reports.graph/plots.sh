@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Bring in helpers script
-. "$HOME/bin/bash-helpers/helpers.sh"
+. "$HOME/Dropbox/projects/dot-files/bash-helpers/helpers.sh"
 
 # Parse date
 parse_date $1

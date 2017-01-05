@@ -1,7 +1,7 @@
 #!/bin/bash
 # Last modified: 2016/12/03 01:31:16 UTC
 
-source "$HOME/bin/bash-helpers/helpers.sh"
+source "$HOME/Dropbox/projects/dot-files/bash-helpers/helpers.sh"
 
 #
 # Parse date (if passed in as argument)
