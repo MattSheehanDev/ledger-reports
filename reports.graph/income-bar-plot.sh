@@ -1,24 +1,33 @@
-#!/bin/sh
+#!/bin/bash
+
+
+# Creates a double bar graph of revenues and expenses.
+# Graphs up to, but not more than, the last twelve months.
+# Takes three arguments/environment variables,
+# YEAR, MONTH, and DATE_NOW (year/month/last day of the month).
+
+YEAR=$year
+MONTH=$month
+DATE_NOW=$now_date
+# YEAR=2016
+# MONTH=12
+# DATE_NOW=$year/$month/31
 
 # if [-z "$LEDGER_TERM" ]; then
 #   LEDGER_TERM="qt size 1280,720 persist"
 # fi
 LEDGER_TERM="svg enhanced background rgb 'white' size 1280,720"
+LEDGER_PLOT_FORMAT="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(scrub(t)))))\n"
 
-ledger -j reg ^Income -M --collapse \
---plot-amount-format="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(scrub(t)))))\n" \
---price-db ~/Dropbox/journals/finances/accounting/data/prices.ledger \
--f ~/Dropbox/journals/finances/accounting/data/general.ledger \
--X $ -R --now 2016/12/31 -c \
--p "2016" --immediate --no-revalued \
+
+ledger reg ^Revenues -M --collapse -j --plot-amount-format="$LEDGER_PLOT_FORMAT" \
+-f "$LEDGER_FILE" --price-db "$LEDGER_PRICES" \
+-X $ -R --now $DATE_NOW -c -p $YEAR --no-revalued \
 > ledgeroutput1.tmp
 
-ledger -j reg ^Expenses -M --collapse \
---plot-amount-format="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(scrub(t)))))\n" \
---price-db ~/Dropbox/journals/finances/accounting/data/prices.ledger \
--f ~/Dropbox/journals/finances/accounting/data/general.ledger \
--X $ -R --now 2016/12/31 -c \
--p "2016" --immediate --no-revalued \
+ledger reg ^Expenses -M --collapse -j --plot-amount-format="$LEDGER_PLOT_FORMAT" \
+-f "$LEDGER_FILE" --price-db "$LEDGER_PRICES" \
+-X $ -R --now $DATE_NOW -c -p $YEAR --no-revalued \
 > ledgeroutput2.tmp
 
 (cat <<EOF) | gnuplot

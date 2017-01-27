@@ -11,13 +11,13 @@ create_dir $capitalgains_dir
 
 echo -n -e $startBlue"Starting capital gains report..."$endColor
 # i'm currently thinking that capital gains should be cumulative from month to month
-ledger bal ^Income:Capital Gains --invert --no-total --now $now_date -c \
+ledger bal ^Revenues:Capital Gains --invert --no-total --now $now_date -c \
 > "${capitalgains_dir}capital-gains.txt"
 
 check_last_result
 
 
-ledger bal ^Income:Capital Gains --invert --no-total --price-db $LEDGER_PRICES -X $ --now $now_date -c \
+ledger bal ^Revenues:Capital Gains --invert --no-total --price-db $LEDGER_PRICES -X $ --now $now_date -c \
 > "${capitalgains_dir}capital-gains-market.txt"
 
 check_last_result

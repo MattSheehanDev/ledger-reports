@@ -3,7 +3,7 @@
 
 echo -n -e $startBlue"Starting cash flow report..."$endColor
 # cash flow report should be per month
-ledger bal ^Income ^Expenses -p $current_date --now $now_date -c \
+ledger bal ^Revenues ^Expenses -p $current_date --now $now_date -c \
 > $month_dir"cash-flow.txt"
 
 check_last_result
@@ -12,7 +12,7 @@ echo -e $startGreenBold"DONE"$endColor
 
 echo -n -e $startBlue"Starting cash flow market report..."$endColor
 # cash flow report should be per month
-ledger bal ^Income ^Expenses -X $ --price-db $LEDGER_PRICES -p $current_date --now $now_date -c \
+ledger bal ^Revenues ^Expenses -X $ --price-db $LEDGER_PRICES -p $current_date --now $now_date -c \
 > $month_dir"cash-flow-market.txt"
 
 check_last_result

@@ -19,11 +19,11 @@
 
 
 echo -n -e $startBlue"Starting dividends report(s)..."$endColor
-ledger bal ^Income:Dividend --no-total --invert --now $now_date -c \
+ledger bal ^Revenues:Dividend --no-total --invert --now $now_date -c \
 > "${dividend_dir}dividends.txt"
 
 
-ledger bal ^Income:Dividend --no-total --invert --price-db $LEDGER_PRICES -X $ --now $now_date -c \
+ledger bal ^Revenues:Dividend --no-total --invert --price-db $LEDGER_PRICES -X $ --now $now_date -c \
 > "${dividend_dir}dividends-market.txt"
 
 check_last_result

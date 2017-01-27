@@ -3,7 +3,7 @@
 
 # Cumulative all time credit card rewards
 echo -n -e $startBlue"Starting cumulative credit card rewards report..."$endColor
-ledger bal ^Income:Rewards -R -e $until_date --limit "has_tag('CREDIT')" --now $now_date -c \
+ledger bal ^Revenues:Rewards -R -e $until_date --limit "has_tag('CREDIT')" --now $now_date -c \
 > $rewards_dir"rewards-cumulative.txt"
 
 check_last_result
@@ -12,7 +12,7 @@ echo -e $startGreenBold"DONE"$endColor
 
 
 echo -n -e $startBlue"Starting monthly credit card rewards report..."$endColor
-ledger bal ^Income:Rewards -R -b $current_date -e $until_date --limit "has_tag('CREDIT')" \
+ledger bal ^Revenues:Rewards -R -b $current_date -e $until_date --limit "has_tag('CREDIT')" \
 --now $now_date -c \
 > $rewards_dir"rewards-monthly.txt"
 
@@ -22,7 +22,7 @@ echo -e $startGreenBold"DONE"$endColor
 
 
 echo -n -e $startBlue"Starting monthly credit card reward market report..."$endColor
-ledger bal ^Income:Rewards -R -b $current_date -e $until_date --limit "has_tag('CREDIT')" \
+ledger bal ^Revenues:Rewards -R -b $current_date -e $until_date --limit "has_tag('CREDIT')" \
 --price-db $LEDGER_PRICES -X $ --now $now_date -c \
 > $rewards_dir"rewards-monthly-market.txt"
 

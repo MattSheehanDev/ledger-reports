@@ -1,7 +1,7 @@
 #!/bin/bash
 # Last modified: 2016/12/03 01:31:16 UTC
 
-source "$HOME/Dropbox/projects/dot-files/bash-helpers/helpers.sh"
+source "$HOME/Dropbox/projects/ledger-reports/helpers.sh"
 
 #
 # Parse date (if passed in as argument)
@@ -41,13 +41,13 @@ fi
 
 
 # The current date
-export current_date=$year/$month
+export current_date="$year/$month"
 
 # A lot of reports calculate based on the --now DATE which should be the last day of the current month
-export now_date=$year/$month/$month_last_day
+export now_date="$year/$month/$month_last_day"
 
 # A lot of reports calculate UNTIL the first of the next month (exclusive, the 1st is not included)
-export until_date=$until_year/$until_month/01
+export until_date="$until_year/$until_month/01"
 
 
 #
@@ -65,9 +65,41 @@ export until_date=$until_year/$until_month/01
 for i in $(find /home/matt/Dropbox/projects/ledger-reports/reports.monthly); do
   if [[ -d "$i" ]]; then
     run-parts --exit-on-error --new-session "$i"
+    # run-parts --exit-on-error --new-session "$i"
   fi
 done
-# run-parts --exit-on-error ./reports.monthly
+
+# ## Graphs
+# for i in $(find /home/matt/Dropbox/projects/ledger-reports/reports.graph); do
+#   if [[ -d "$i" ]]; then
+#     # run-parts --exit-on-error "$i" > "${month_dir}${GRAPH_NAME}"
+#     # PARTS=($(run-parts --exit-on-error "$i"))
+#     for l in $(run-parts --exit-on-error --list "$i"); do
+#         # "$l" > "${month_dir}${GRAPH_NAME}"
+#         echo $l
+#     done
+#     # run-parts --exit-on-error --new-session "$i"
+#   else
+#     # echo $i
+#     T=`source "$i"`
+#     echo T > "${month_dir}${GRAPH_NAME}"
+#   fi
+# done
+
+echo -n -e "${startBlue}income area graph...${endColor}"
+bash "$HOME/Dropbox/projects/ledger-reports/reports.graph/income-area-plot.sh" \
+>| "${month_dir}income-area-graph.svg"
+echo -e "${startGreenBold}DONE${endColor}"
+
+echo -n -e "${startBlue}income bar graph...${endColor}"
+bash "$HOME/Dropbox/projects/ledger-reports/reports.graph/income-bar-plot.sh" \
+>| "${month_dir}income-bar-graph.svg"
+echo -e "${startGreenBold}DONE${endColor}"
+
+echo -n -e "${startBlue}net-worth area graph...${endColor}"
+bash "$HOME/Dropbox/projects/ledger-reports/reports.graph/net-worth-area-plot.sh" \
+>| "${month_dir}net-worth-area-graph.svg"
+echo -e "${startGreenBold}DONE${endColor}"
 
 
 exit 0

@@ -2,7 +2,7 @@
 
 
 echo -n -e $startBlue"Starting accounts payable report..."$endColor
-ledger bal ^Liabilities:Accounts Payable --group-by "payee" --empty --now $now_date -c \
+ledger bal "^Liabilities:Accounts Payable" --group-by "payee" --empty --now $now_date -c \
 > $liabilities_dir"accounts-payable.txt"
 
 check_last_result

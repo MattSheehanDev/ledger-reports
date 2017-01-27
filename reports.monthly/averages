@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Average monthly spending on Food
+ledger bal ^Expenses:Food \
+ -R --pedantic -f /home/matt/Dropbox/journals/finances/accounting/data/general.ledger \
+ -p "2016" --format "\
+ %-18((depth_spacer)+(partial_account)) \
+ %12(market(display_total, date, '$') / 12)\n \
+ %/"
+
+# Average price/gallon of gas
+ledger bal ^Expenses:Auto:Gas \
+-f /home/matt/Dropbox/journals/finances/accounting/data/general.ledger \
+-p "2016" --format "\
+%( ((market(display_total, date, '$'))) / (quantity(market(display_total, date, 'GAL'))) )"
+
+# 434.886 GAL
