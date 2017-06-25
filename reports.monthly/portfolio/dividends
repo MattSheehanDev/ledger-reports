@@ -19,15 +19,26 @@
 
 
 echo -n -e $startBlue"Starting dividends report(s)..."$endColor
-ledger bal ^Revenues:Dividend --no-total --invert --now $now_date -c \
+# ledger bal ^Revenues:Dividend --no-total --invert --now $now_date -c \
+# > "${dividend_dir}dividends.txt"
+ledger bal ^Revenues:Portfolio:Dividend -f "${LEDGER_FILE}" --pivot SYM --no-total --invert \
+--now $now_date -c -R --pedantic \
 > "${dividend_dir}dividends.txt"
 
 
-ledger bal ^Revenues:Dividend --no-total --invert --price-db $LEDGER_PRICES -X $ --now $now_date -c \
+# ledger bal ^Revenues:Dividend --no-total --invert --price-db $LEDGER_PRICES -X $ --now $now_date -c \
+# > "${dividend_dir}dividends-market.txt"
+ledger bal ^Revenues:Portfolio:Dividend -f "${LEDGER_FILE}" --pivot SYM --price-db "${LEDGER_PRICES}" \
+-X $ --now $now_date -c --no-total --invert -R --pedantic \
 > "${dividend_dir}dividends-market.txt"
 
 check_last_result
 echo -e $startGreenBold"DONE"$endColor
+
+
+# TODO: make dividend register report
+# ledger reg "Assets:Portfolio" -f "${LEDGER_FILE}" -b "${current_date}" -e "${until_date}"
+# --now "${now_date}" -T "" --lot-prices
 
 
 exit 0

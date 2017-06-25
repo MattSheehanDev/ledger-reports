@@ -12,8 +12,8 @@ echo "----------------------------------------" >> "${investments_dir}commodity-
 # commodity allocation should be cumulative through reporting month
 ledger bal ^Allocation --price-db $LEDGER_PRICES \
 -e $until_date -X $ --now $now_date -c --format "\
-%12(market(display_total, date, '$'))\
-%12(percent(market(display_total, date, exchange), market(parent.total, date, exchange)))\
+%-18((depth_spacer)+(market(display_total, date, '$')))\
+%-14((depth_spacer)+(percent(market(display_total, date, exchange), market(parent.total, date, exchange))))\
 \t\
 %-18((depth_spacer)+(partial_account))\n\
 %/" \
@@ -30,8 +30,8 @@ echo "----------------------------------------" >> "${investments_dir}commodity-
 # exclude any cash
 ledger bal ^Allocation and not Allocation:Cash -X $ --now $now_date --current \
 --price-db $LEDGER_PRICES --format "\
-%12(market(display_total, date, '$'))\
-%12(percent(market(display_total, date, exchange), market(parent.total, date, exchange)))\
+%-18((depth_spacer)+(market(display_total, date, '$')))\
+%-14((depth_spacer)+(percent(market(display_total, date, exchange), market(parent.total, date, exchange))))\
 \t\
 %-18((depth_spacer)+(partial_account))\n\
 %/" \

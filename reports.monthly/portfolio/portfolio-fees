@@ -10,13 +10,19 @@
 
 echo -n -e $startBlue"Starting portfolio fees report..."$endColor
 # i'm also currently thinking that this should be cumulative too
-ledger bal ^Expenses:Fees:Portfolio --invert --now $now_date -c \
+ledger bal ^Expenses:Fees:Portfolio -f "${LEDGER_FILE}" --pivot SYM --no-total --invert \
+--now $now_date -c -R --pedantic \
 > "${fees_dir}portfolio-fees.txt"
+# ledger bal ^Expenses:Fees:Portfolio --invert --now $now_date -c \
+# > "${fees_dir}portfolio-fees.txt"
 
 check_last_result
 
 
-ledger bal ^Expenses:Fees:Portfolio --invert --price-db $LEDGER_PRICES -X $ --now $now_date -c \
+# ledger bal ^Expenses:Fees:Portfolio --invert --price-db $LEDGER_PRICES -X $ --now $now_date -c \
+# > "${fees_dir}portfolio-fees-market.txt"
+ledger bal ^Expenses:Fees:Portfolio -f "${LEDGER_FILE}" --pivot SYM --price-db "${LEDGER_PRICES}" \
+-X $ --now $now_date -c --no-total --invert -R --pedantic \
 > "${fees_dir}portfolio-fees-market.txt"
 
 check_last_result
