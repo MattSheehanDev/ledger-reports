@@ -104,5 +104,9 @@ bash "${LEDGERSCRIPTS_REPORTS_DIR}reports.graph/net-worth-area-plot.sh" \
 >| "${month_dir}net-worth-area-graph.svg"
 echo -e "${startGreenBold}DONE${endColor}"
 
+echo -n -e "${startBlue}monthly expenses histogram...${endColor}"
+bash "${LEDGERSCRIPTS_REPORTS_DIR}reports.graph/expenses-histogram.sh" \
+>| "${month_dir}monthly-expenses-histogram.svg"
+echo -e "${startGreenBold}DONE${endColor}"
 
 exit 0
