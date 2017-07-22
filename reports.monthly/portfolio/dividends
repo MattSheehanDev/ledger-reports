@@ -1,6 +1,69 @@
 #!/bin/bash
 
 
+# TODO: don't use the current market value for dividends?
+
+dividend_dir="${investments_dir}Dividends/"
+create_dir $dividend_dir
+
+capitalgains_dir="${investments_dir}CapitalGains/"
+create_dir $capitalgains_dir
+
+
+##
+## Dividends
+##
+echo -n -e $startBlue"Starting dividends report(s)..."$endColor
+
+ledger bal "^Revenues:Portfolio:Dividend" -f "${LEDGER_FILE}" --pivot SYM --no-total --invert \
+--now $now_date -c -R --pedantic \
+> "${dividend_dir}dividends.txt"
+
+
+ledger bal "^Revenues:Portfolio:Dividend" -f "${LEDGER_FILE}" --pivot SYM --price-db "${LEDGER_PRICES}" \
+-X $ --now $now_date -c --no-total --invert -R --pedantic \
+> "${dividend_dir}dividends-market.txt"
+
+check_last_result
+echo -e $startGreenBold"DONE"$endColor
+
+
+##
+## Capital gains
+##
+echo -n -e $startBlue"Starting capital gains report..."$endColor
+# i'm currently thinking that capital gains should be cumulative from month to month
+ledger bal "^Revenues:Portfolio:Capital Gains" -f "${LEDGER_FILE}" --pivot SYM --no-total --invert \
+--now $now_date -c -R --pedantic \
+> "${capitalgains_dir}capital-gains.txt"
+
+check_last_result
+
+
+ledger bal "^Revenues:Portfolio:Capital Gains" -f "${LEDGER_FILE}" --pivot SYM --price-db "${LEDGER_PRICES}" \
+-X $ --now $now_date -c --no-total --invert -R --pedantic \
+> "${capitalgains_dir}capital-gains-market.txt"
+
+check_last_result
+echo -e $startGreenBold"DONE"$endColor
+
+
+##
+## dividend register report
+##
+ledger reg "Assets:Portfolio" -f "${LEDGER_FILE}" -b "${current_date}" -e "${until_date}" \
+--now "${now_date}" -T "" --lot-prices \
+> "${dividend_dir}dividends-reg.txt"
+
+
+check_last_result
+echo -e $startGreenBold"DONE"$endColor
+
+
+exit 0
+
+
+
 # ledger bal Income:Dividend --no-total --pivot SYMBOL --invert \
 # --market > $investments_dir"dividends-total.txt"
 
@@ -13,34 +76,3 @@
 # --pivot SYMBOL --invert --market > $investments_dir"dividends-special.txt"
 #
 # check_last_result
-
-
-# TODO: don't use the current market value for dividends either
-
-
-echo -n -e $startBlue"Starting dividends report(s)..."$endColor
-# ledger bal ^Revenues:Dividend --no-total --invert --now $now_date -c \
-# > "${dividend_dir}dividends.txt"
-ledger bal ^Revenues:Portfolio:Dividend -f "${LEDGER_FILE}" --pivot SYM --no-total --invert \
---now $now_date -c -R --pedantic \
-> "${dividend_dir}dividends.txt"
-
-
-# ledger bal ^Revenues:Dividend --no-total --invert --price-db $LEDGER_PRICES -X $ --now $now_date -c \
-# > "${dividend_dir}dividends-market.txt"
-ledger bal ^Revenues:Portfolio:Dividend -f "${LEDGER_FILE}" --pivot SYM --price-db "${LEDGER_PRICES}" \
--X $ --now $now_date -c --no-total --invert -R --pedantic \
-> "${dividend_dir}dividends-market.txt"
-
-
-# dividend register report
-ledger reg "Assets:Portfolio" -f "${LEDGER_FILE}" -b "${current_date}" -e "${until_date}" \
---now "${now_date}" -T "" --lot-prices \
-> "${dividend_dir}dividends-reg.txt"
-
-
-check_last_result
-echo -e $startGreenBold"DONE"$endColor
-
-
-exit 0

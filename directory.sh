@@ -25,10 +25,10 @@ create_dir $rewards_dir
 
 export investments_dir=$month_dir"Portfolio/"
 create_dir $investments_dir
-export fees_dir="${investments_dir}Fees/"
-create_dir $fees_dir
-export dividend_dir="${investments_dir}Dividends/"
-create_dir $dividend_dir
+# export fees_dir="${investments_dir}Fees/"
+# create_dir $fees_dir
+# export dividend_dir="${investments_dir}Dividends/"
+# create_dir $dividend_dir
 
 export liabilities_dir=$month_dir"Liabilities/"
 create_dir $liabilities_dir
