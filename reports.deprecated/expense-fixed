@@ -16,6 +16,7 @@ echo -e $startGreenBold"DONE"$endColor
 
 ##
 ## Expenses variable
+##
 echo -n -e $startBlue"Starting variable expense report..."$endColor
 
 ledger bal "^Expenses" --limit "has_tag('VARIABLE')" --no-total -p $current_date \

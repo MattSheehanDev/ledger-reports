@@ -15,8 +15,8 @@ create_dir $month_dir
 export expense_dir=$month_dir"Expenses/"
 create_dir $expense_dir
 
-export averages_dir="${expense_dir}Averages/"
-create_dir $averages_dir
+# export averages_dir="${expense_dir}Averages/"
+# create_dir $averages_dir
 
 export asset_dir=$month_dir"Assets/"
 create_dir $asset_dir
