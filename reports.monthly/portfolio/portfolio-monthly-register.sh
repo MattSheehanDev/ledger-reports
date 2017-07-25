@@ -62,6 +62,28 @@
 # # %-(partial_account(false)) \
 # # \n%/"
 
+current_date="2017/07/01"
+until_date="2017/08/01"
+now_date="2017/07/31"
+LEDGER_FILE="/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
+LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
+
+
+# ledger bal "/^Revenues:Rewards:(Discover it|Huntington Voice|Citi Double Cash)/" \
+# -f $LEDGER_FILE --price-db $LEDGER_PRICES \
+# -b $current_date -e $until_date --now $now_date \
+# -R -c --no-total \
+# --balance-format "\
+# %(justify(scrub(display_total), 20, -1, true, color)) \
+# %(!options.flat ? depth_spacer : \"\") \
+# %-(ansify_if(partial_account(options.flat), blue if color))\n \
+# "
+# # --balance-format "\
+# # %20(justify(scrub(display_total), 20, -1, true, false)) \
+# # %14(justify(market(display_total, date, '$'), 14, -1, true, false)) \
+# # %(depth_spacer) \
+# # %-30(partial_account(false))\n"
+
 
 
 printf "\
