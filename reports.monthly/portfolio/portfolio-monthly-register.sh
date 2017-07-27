@@ -1,50 +1,6 @@
 #!/bin/bash
 
 
-# printf "\
-# %-9s %-7s %-s\n" \
-# "Gallons" "$/Gal" "Automobile"
-
-# printf '=%.0s' {1..80}
-# printf "\n"
-
-# ledger bal "^Expenses:Auto:Gas" \
-# -f "/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger" \
-# --price-db "/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger" \
-# --pivot "VEHICLE" -b "2017/01/01" -e "2017/08/01" \
-# --balance-format "\
-# %-9(quantity(market(display_total, date, 'GAL'))) \
-# %-7( market(display_total, date, '$') / quantity(market(display_total, date, 'GAL')) ) \
-# %-(partial_account(false)) \
-# \n%/"
-
-# %-48(partial_account(false)) \
-# %10( market(display_total, date, '$') / quantity(market(display_total, date, 'GAL')) )/GAL \
-# %13(quantity(market(display_total, date, 'GAL'))) GAL \
-# \n%/"
-
-
-
-
-# printf "%11s %11s %11s\n" "Total" "Average" "Account"
-# printf '=%.0s' {1..80}
-# printf "\n"
-
-# ledger bal "^Expenses" \
-# -f "/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger" \
-# --price-db "/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger" \
-# -R --pedantic --no-total -b "2017/01/01" -e "2017/08/01" -X $ \
-# --balance-format "\
-# %(justify((display_total), 11, -1, true, false)) \
-# %(justify((display_total / 7), 11, -1, true, false)) \
-# %(depth_spacer) \
-# %-(partial_account(false))\n"
-
-# %-10(display_amount > 0 ? (display_amount / 7) : '') \
-# %-(display_amount > 0 ? (partial_account(true)) : '') \
-# %(display_amount > 0 ? '\n' : '\b\b\b\b\b\b\b\b\b\b\b\b')"
-
-
 
 # ledger bal "^Expenses:Fees:Portfolio" \
 # -f "/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger" \
@@ -56,11 +12,8 @@
 # # %-14(strip(display_total)) \
 # # %-10(lot_price)\n"
 
-# # --balance-format "\
-# # %-20( market(display_total, post.date, '$') ) \
-# # %(depth_spacer) \
-# # %-(partial_account(false)) \
-# # \n%/"
+YEAR=2017
+MONTH=07
 
 current_date="2017/07/01"
 until_date="2017/08/01"
@@ -69,23 +22,41 @@ LEDGER_FILE="/home/matt/Dropbox/journals/finances/accounting/ledger/data/general
 LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
 
 
-# ledger bal "/^Revenues:Rewards:(Discover it|Huntington Voice|Citi Double Cash)/" \
-# -f $LEDGER_FILE --price-db $LEDGER_PRICES \
-# -b $current_date -e $until_date --now $now_date \
-# -R -c --no-total \
-# --balance-format "\
-# %(justify(scrub(display_total), 20, -1, true, color)) \
-# %(!options.flat ? depth_spacer : \"\") \
-# %-(ansify_if(partial_account(options.flat), blue if color))\n \
+# ledger reg "/^Liabilities:Credit Card:Discover it/" -X $ --invert \
+# -f $LEDGER_FILE --price-db $LEDGER_PRICES --now $now_date -e $until_date -c \
+# --limit "strip(display_amount) > 0"
+
+
+
+# ledger bal "/^Revenues:Rewards:Discover it/" -X $ --invert \
+# -f $LEDGER_FILE --price-db $LEDGER_PRICES --now $now_date -e $until_date -c \
+# --balance_format="\
+# %(display_total)"
+
+# discover_total_dirty=$(\
+# ledger bal "/^Liabilities:Credit Card:Discover it/" -X $ --invert -c \
+# -f $LEDGER_FILE --price-db $LEDGER_PRICES --now $now_date -e $until_date \
+# | tail -n 1 | sed -e 's/^[ \t]*//' \
+# )
+# discover_rewards_dirty=$(\
+# ledger bal "/^Revenues:Rewards:Discover it/" -R -X $ \
+# -f $LEDGER_FILE --price-db $LEDGER_PRICES --now $now_date -e $until_date -c \
+# | tail -n 1 | sed -e 's/^[ \t]*//' \
+# )
+
+# discover_total=$(echo $discover_total_dirty | sed 's/[,$-]//g')
+# discover_rewards=$(echo $discover_rewards_dirty | sed 's/[,$-]//g')
+
+# # cashback_rate=$(echo "$discover_rewards/$discover_total" | bc -l)
+# # cashback_rate_percent=$(printf "%.*f\n" 2 $(echo "$cashback_rate*100" | bc -l))
+
+# echo "
+# $discover_total
+# $discover_rewards
 # "
-# # --balance-format "\
-# # %20(justify(scrub(display_total), 20, -1, true, false)) \
-# # %14(justify(market(display_total, date, '$'), 14, -1, true, false)) \
-# # %(depth_spacer) \
-# # %-30(partial_account(false))\n"
 
 
-
+# TODO: move to a seperate file in reports.fi
 printf "\
 %-10s %-26s %-10s %-14s %-10s %-10s\n" \
 "Date" "Account" "Type" "Lot" "Price" "Value"
