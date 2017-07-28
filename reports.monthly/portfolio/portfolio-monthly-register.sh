@@ -13,14 +13,33 @@
 # # %-10(lot_price)\n"
 
 YEAR=2017
-MONTH=07
+# MONTH=07
+MONTH=06
 
-current_date="2017/07/01"
-until_date="2017/08/01"
-now_date="2017/07/31"
+current_date="2017/06"
+until_date="2017/07/01"
+now_date="2017/06/30"
+# current_date="2017/07/01"
+# until_date="2017/08/01"
+# now_date="2017/07/31"
 LEDGER_FILE="/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
 LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
 
+
+ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" -X $ --invert -c \
+-f $LEDGER_FILE --price-db $LEDGER_PRICES \
+--now $now_date -b "$YEAR/01/01" -e $until_date \
+--balance-format "\
+%(justify((display_total), 11, -1, true, false)) \
+%(justify((display_total / $MONTH), 11, -1, true, false)) \
+%(depth_spacer) \
+%-(partial_account(false))\n"
+# --balance-format "%(display_total)\n%(display_total / $MONTH)\n"
+
+# ledger bal "/^Revenues/" -X $ --invert -c \
+# -f $LEDGER_FILE --price-db $LEDGER_PRICES \
+# --now $now_date -b "$YEAR/01/01" -e $until_date \
+# --balance-format "%(display_total)\n%(display_total / $MONTH)\n"
 
 # ledger reg "/^Liabilities:Credit Card:Discover it/" -X $ --invert \
 # -f $LEDGER_FILE --price-db $LEDGER_PRICES --now $now_date -e $until_date -c \
@@ -54,30 +73,3 @@ LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/price
 # $discover_total
 # $discover_rewards
 # "
-
-
-# TODO: move to a seperate file in reports.fi
-printf "\
-%-10s %-26s %-10s %-14s %-10s %-10s\n" \
-"Date" "Account" "Type" "Lot" "Price" "Value"
-
-printf '=%.0s' {1..80}
-printf "\n"
-
-ledger reg "Assets:Portfolio" \
--f "/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger" \
---price-db "/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger" \
--b "2017/06" -e "2017/07/01" --now "2017/06/30" --current -T "" \
---register-format "\
-%-10d \
-%-26(truncated(display_account, int(25), int(2))) \
-%-10(tag(\"TYPE\")) \
-%-14(strip(display_amount)) \
-%-10(lot_price(amount, amount)) \
-%-10(roundto(price, 4))\n"
-
-# %-10(market(to_string(1) + ' ' + commodity, d, '$')) \
-# %(market((commodity), d, '$')) \n"
-#%(strip(price)*strip(display_amount))\n"
-
-# --display "tag(\"TYPE\") == 'DIV-REINV'"
