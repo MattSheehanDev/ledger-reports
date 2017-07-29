@@ -91,22 +91,22 @@ done
 
 echo -n -e "${startBlue}income area graph...${endColor}"
 bash "${LEDGERSCRIPTS_REPORTS_DIR}reports.graph/income-area-plot.sh" \
->| "${month_dir}income-area-graph.svg"
+>| "${graph_dir}income-area-graph.svg"
 echo -e "${startGreenBold}DONE${endColor}"
 
 echo -n -e "${startBlue}income bar graph...${endColor}"
 bash "${LEDGERSCRIPTS_REPORTS_DIR}reports.graph/income-bar-plot.sh" \
->| "${month_dir}income-bar-graph.svg"
+>| "${graph_dir}income-bar-graph.svg"
 echo -e "${startGreenBold}DONE${endColor}"
 
 echo -n -e "${startBlue}net-worth area graph...${endColor}"
 bash "${LEDGERSCRIPTS_REPORTS_DIR}reports.graph/net-worth-area-plot.sh" \
->| "${month_dir}net-worth-area-graph.svg"
+>| "${graph_dir}net-worth-area-graph.svg"
 echo -e "${startGreenBold}DONE${endColor}"
 
 echo -n -e "${startBlue}monthly expenses histogram...${endColor}"
 bash "${LEDGERSCRIPTS_REPORTS_DIR}reports.graph/expenses-histogram.sh" \
->| "${month_dir}monthly-expenses-histogram.svg"
+>| "${graph_dir}monthly-expenses-histogram.svg"
 echo -e "${startGreenBold}DONE${endColor}"
 
 exit 0

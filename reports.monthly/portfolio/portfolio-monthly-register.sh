@@ -29,12 +29,26 @@ LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/price
 ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" -X $ --invert -c \
 -f $LEDGER_FILE --price-db $LEDGER_PRICES \
 --now $now_date -b "$YEAR/01/01" -e $until_date \
---balance-format "\
-%(justify((display_total), 11, -1, true, false)) \
-%(justify((display_total / $MONTH), 11, -1, true, false)) \
-%(depth_spacer) \
-%-(partial_account(false))\n"
+--balance-format "%(display_total)\n%(display_total / $MONTH)\n" \
+
+# ledger bal "^Assets" "^Liabilities" -X $ -c --price-db $LEDGER_PRICES -f $LEDGER_FILE \
+# --now $now_date -e $until_date \
+# --balance-format "%/%-(display_total * 0.0385 / 12)\n %-("
+
+# ledger bal "/^Expenses:(Tax:(?!Sales)|Deductions)/" -X $ --invert -c \
+# -f $LEDGER_FILE --price-db $LEDGER_PRICES \
+# --now $now_date -b "$YEAR/01/01" -e $until_date
 # --balance-format "%(display_total)\n%(display_total / $MONTH)\n"
+
+# ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" -X $ --invert -c \
+# -f $LEDGER_FILE --price-db $LEDGER_PRICES \
+# --now $now_date -b "$YEAR/01/01" -e $until_date \
+# --balance-format "\
+# %(justify((display_total), 11, -1, true, false)) \
+# %(justify((display_total / $MONTH), 11, -1, true, false)) \
+# %(depth_spacer) \
+# %-(partial_account(false))\n"
+# # --balance-format "%(display_total)\n%(display_total / $MONTH)\n"
 
 # ledger bal "/^Revenues/" -X $ --invert -c \
 # -f $LEDGER_FILE --price-db $LEDGER_PRICES \

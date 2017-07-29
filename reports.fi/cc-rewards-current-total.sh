@@ -1,8 +1,8 @@
 #!/bin/bash
 
 
-until_date="2017/08/01"
-now_date="2017/07/31"
+until_date="2017/07/01"
+now_date="2017/06/30"
 LEDGER_FILE="/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
 LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
 
