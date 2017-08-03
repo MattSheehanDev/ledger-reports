@@ -16,20 +16,24 @@ YEAR=2017
 # MONTH=07
 MONTH=06
 
-current_date="2017/06"
-until_date="2017/07/01"
-now_date="2017/06/30"
+current_date="2017/07"
+until_date="2017/08/01"
+now_date="2017/07/31"
 # current_date="2017/07/01"
 # until_date="2017/08/01"
 # now_date="2017/07/31"
 LEDGER_FILE="/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
 LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
 
-
-ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" -X $ --invert -c \
+ledger bal "^Assets" "^Liabilities" -X $ \
 -f $LEDGER_FILE --price-db $LEDGER_PRICES \
---now $now_date -b "$YEAR/01/01" -e $until_date \
---balance-format "%(display_total)\n%(display_total / $MONTH)\n" \
+--now $now_date --current -p monthly until $until_date
+
+
+# ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" -X $ --invert -c \
+# -f $LEDGER_FILE --price-db $LEDGER_PRICES \
+# --now $now_date -b "$YEAR/01/01" -e $until_date \
+# --balance-format "%(display_total)\n%(display_total / $MONTH)\n" \
 
 # ledger bal "^Assets" "^Liabilities" -X $ -c --price-db $LEDGER_PRICES -f $LEDGER_FILE \
 # --now $now_date -e $until_date \
