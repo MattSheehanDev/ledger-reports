@@ -25,9 +25,18 @@ now_date="2017/07/31"
 LEDGER_FILE="/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
 LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
 
-ledger bal "^Assets" "^Liabilities" -X $ \
+ledger bal "^Revenues" "^Expenses" \
 -f $LEDGER_FILE --price-db $LEDGER_PRICES \
---now $now_date --current -p monthly until $until_date
+-X $ \
+-p $current_date --now $now_date -c
+# ledger bal \
+# -f $LEDGER_FILE --price-db $LEDGER_PRICES \
+# -R -X $ \
+# -e $until_date --now $now_date -c
+
+# ledger bal "^Assets" "^Liabilities" -X $ \
+# -f $LEDGER_FILE --price-db $LEDGER_PRICES \
+# --now $now_date --current -e $until_date
 
 
 # ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" -X $ --invert -c \

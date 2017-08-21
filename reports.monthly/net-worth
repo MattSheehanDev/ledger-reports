@@ -13,25 +13,39 @@
 # --now is useful with --current (-c) to limit the transactions to postings with dates <= to the date defined
 # by --now.
 
-echo -n -e $startBlue"Starting net worth report..."$endColor
-# net worth report should be cumulative up to and including the reporting month
-ledger bal ^Assets ^Liabilities -p monthly until $until_date --now $now_date --current \
-> $month_dir"net-worth.txt"
+echo -n -e $startBlue"Starting net worth reports..."$endColor
 
-# "/home/matt/Dropbox/projects/ledger-reports/reports.monthly/net-worth-ex" \
-# > "${month_dir}net-worth.txt"
+echo "$(../reports.fi/net-worth.sh)" \
+> "${month_dir}net-worth.txt"
 
 check_last_result
-echo -e $startGreenBold"DONE"$endColor
 
-
-echo -n -e $startBlue"Starting net worth market value report..."$endColor
-# same as net worth report except with terms of USD
-ledger bal ^Assets ^Liabilities --exchange $ --price-db $LEDGER_PRICES --now $now_date --current \
--p monthly until $until_date > $month_dir"net-worth-market.txt"
+echo "$(../reports.fi/net-worth-market.sh)" \
+> "${month_dir}net-worth-market.txt"
 
 check_last_result
+
 echo -e $startGreenBold"DONE"$endColor
+
+# echo -n -e $startBlue"Starting net worth report..."$endColor
+# # net worth report should be cumulative up to and including the reporting month
+# ledger bal ^Assets ^Liabilities -p monthly until $until_date --now $now_date --current \
+# > $month_dir"net-worth.txt"
+
+# # "/home/matt/Dropbox/projects/ledger-reports/reports.monthly/net-worth-ex" \
+# # > "${month_dir}net-worth.txt"
+
+# check_last_result
+# echo -e $startGreenBold"DONE"$endColor
+
+
+# echo -n -e $startBlue"Starting net worth market value report..."$endColor
+# # same as net worth report except with terms of USD
+# ledger bal ^Assets ^Liabilities --exchange $ --price-db $LEDGER_PRICES --now $now_date --current \
+# -p monthly until $until_date > $month_dir"net-worth-market.txt"
+
+# check_last_result
+# echo -e $startGreenBold"DONE"$endColor
 
 
 exit 0
