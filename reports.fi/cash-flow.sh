@@ -4,15 +4,13 @@
 LEDGER_FILE="/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
 LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
 
-END="2017/08/01"
 NOW="2017/07/31"
 
 # END="${until_date}"
 # NOW="${now_date}"
 
 
-ledger bal \
+ledger bal "^Revenues" "^Expenses" \
 -f $LEDGER_FILE --price-db $LEDGER_PRICES \
--R -X $ \
--e $END --now $NOW -c
+-p "this month" --now $NOW -c
 

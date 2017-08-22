@@ -12,7 +12,7 @@ create_dir $year_dir
 export month_dir="$year_dir$month_long/"
 create_dir $month_dir
 
-export graph_dir="${year_dir}Graphs"
+export graph_dir="${month_dir}Graphs"
 create_dir $graph_dir
 
 export expense_dir=$month_dir"Expenses/"

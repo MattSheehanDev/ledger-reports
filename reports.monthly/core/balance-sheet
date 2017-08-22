@@ -3,12 +3,12 @@
 
 echo -n -e $startBlue"Starting balance sheet reports..."$endColor
 
-echo "$(../reports.fi/balance-sheet.sh)" \
+echo "$(/home/matt/Dropbox/journals/finances/accounting/ledger-reports/reports.fi/balance-sheet.sh)" \
 > "${month_dir}balance-sheet.txt"
 
 check_last_result
 
-echo "$(../reports.fi/balance-sheet-market.sh)" \
+echo "$(/home/matt/Dropbox/journals/finances/accounting/ledger-reports/reports.fi/balance-sheet-market.sh)" \
 > "${month_dir}balance-sheet-market.txt"
 
 check_last_result
