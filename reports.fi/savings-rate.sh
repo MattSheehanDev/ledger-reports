@@ -1,18 +1,31 @@
+#!/bin/bash
+
 
 LEDGER_FILE="$HOME/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
 LEDGER_PRICES="$HOME/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
-current_date="2017/06"
-until_date="2017/07/01"
-now_date="2017/06/30"
+
+BEGIN="2017/06"
+END="2017/07/01"
+NOW="2017/06/30"
+
 YEAR=2017
 MONTH=06
 MONTH_LONG="June"
 
 
+# BEGIN="${current_date}"
+# END="${until_date}"
+# NOW="${now_date}"
+
+# YEAR=$year
+# MONTH=$month
+# MONTH_LONG=$month_long
+
+
 # take the last line and remove spaces
 income_before_tax_month=$(\
 ledger bal "/^Revenues/" -X $ --invert -c \
--f $LEDGER_FILE --price-db $LEDGER_PRICES -p $current_date --now $now_date -e $until_date \
+-f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" -p $BEGIN --now $NOW -e $END \
 | tail -n 1 | sed -e 's/^[ \t]*//' \
 )
 monthly_income_before_tax_clean=$(echo $income_before_tax_month | sed 's/[,$]//g')
@@ -20,8 +33,8 @@ monthly_income_before_tax_clean=$(echo $income_before_tax_month | sed 's/[,$]//g
 
 income_before_tax=$(\
 ledger bal "/^Revenues/" -X $ --invert -c \
--f $LEDGER_FILE --price-db $LEDGER_PRICES \
---now $now_date -b "$YEAR/01/01" -e $until_date \
+-f ${LEDGER_FILE} --price-db ${LEDGER_PRICES} \
+--now $NOW -b "$YEAR/01/01" -e $END \
 --balance-format "%(display_total)\n%(display_total / $MONTH)\n" \
 )
 income_before_tax_avg=$(echo "$income_before_tax" | tail -n 1 | sed -e 's/^[ \t]*//')
@@ -31,14 +44,14 @@ income_before_tax_avg_clean=$(echo $income_before_tax_avg | sed 's/[,$]//g')
 
 taxes_and_deductions_month=$(\
 ledger bal "/^Expenses:(Tax:(?!Sales)|Deductions)/" -X $ --invert -c \
--f $LEDGER_FILE --price-db $LEDGER_PRICES \
---now $now_date -b $current_date -e $until_date \
+-f ${LEDGER_FILE} --price-db ${LEDGER_PRICES} \
+--now $NOW -b $BEGIN -e $END \
 | tail -n 1 | sed -e 's/^[ \t]*//' \
 )
 taxes_and_deductions_year=$(\
 ledger bal "/^Expenses:(Tax:(?!Sales)|Deductions)/" -X $ --invert -c \
--f $LEDGER_FILE --price-db $LEDGER_PRICES \
---now $now_date -b "$YEAR/01/01" -e $until_date \
+-f ${LEDGER_FILE} --price-db ${LEDGER_PRICES} \
+--now $NOW -b "$YEAR/01/01" -e $END \
 --balance-format "%(display_total)\n%(display_total / $MONTH)\n" \
 )
 taxes_and_deductions_avg=$(echo "$taxes_and_deductions_year" | tail -n 1 | sed -e 's/^[ \t]*//')
@@ -48,13 +61,13 @@ taxes_and_deductions_total=$(echo "$taxes_and_deductions_year" | tail -n 2 | hea
 
 income_after_tax_month=$(\
 ledger bal "/^Revenues/" "/^Expenses:(Tax:(?!Sales)|Deductions)/" -X $ --invert \
--f $LEDGER_FILE --price-db $LEDGER_PRICES -p $current_date --now $now_date -c -e $until_date \
+-f ${LEDGER_FILE} --price-db ${LEDGER_PRICES} -p $BEGIN --now $NOW -c -e $END \
 | tail -n 1 | sed -e 's/^[ \t]*//' \
 )
 income_after_tax=$(\
 ledger bal "/^Revenues/" "/^Expenses:(Tax:(?!Sales)|Deductions)/" -X $ --invert -c \
--f $LEDGER_FILE --price-db $LEDGER_PRICES \
---now $now_date -b "$YEAR/01/01" -e $until_date \
+-f ${LEDGER_FILE} --price-db ${LEDGER_PRICES} \
+--now $NOW -b "$YEAR/01/01" -e $END \
 --balance-format "%(display_total)\n%(display_total / $MONTH)\n" \
 )
 income_after_tax_avg=$(echo "$income_after_tax" | tail -n 1 | sed -e 's/^[ \t]*//')
@@ -66,7 +79,7 @@ avg_income_after_tax_clean=$(echo $income_after_tax_avg | sed 's/[,$]//g')
 
 income_after_expenses_month=$(\
 ledger bal ^Revenues ^Expenses -X $ --invert \
---price-db $LEDGER_PRICES -p $current_date --now $now_date -c \
+--price-db ${LEDGER_PRICES} -p $BEGIN --now $NOW -c \
 | tail -n 1 | sed -e 's/^[ \t]*//' \
 )
 monthly_income_after_expenses_clean=$(echo $income_after_expenses_month | sed 's/[,$]//g')
@@ -74,8 +87,8 @@ monthly_income_after_expenses_clean=$(echo $income_after_expenses_month | sed 's
 
 income_after_expenses=$(\
 ledger bal "/^Revenues/" "/^Expenses/" -X $ --invert -c \
--f $LEDGER_FILE --price-db $LEDGER_PRICES \
---now $now_date -b "$YEAR/01/01" -e $until_date \
+-f ${LEDGER_FILE} --price-db ${LEDGER_PRICES} \
+--now $NOW -b "$YEAR/01/01" -e $END \
 --balance-format "%(display_total)\n%(display_total / $MONTH)\n" \
 )
 income_after_expenses_avg=$(echo "$income_after_expenses" | tail -n 1 | sed -e 's/^[ \t]*//')
@@ -85,13 +98,13 @@ income_after_expenses_avg_clean=$(echo $income_after_expenses_avg | sed 's/[,$]/
 
 expenses_except_tax_month=$(\
 ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" -X $ --invert -c \
--f $LEDGER_FILE --price-db $LEDGER_PRICES -p $current_date --now $now_date -e $until_date \
+-f ${LEDGER_FILE} --price-db ${LEDGER_PRICES} -p $BEGIN --now $NOW -e $END \
 | tail -n 1 | sed -e 's/^[ \t]*//' \
 )
 expenses_except_tax_year=$(\
 ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" -X $ --invert -c \
--f $LEDGER_FILE --price-db $LEDGER_PRICES \
---now $now_date -b "$YEAR/01/01" -e $until_date \
+-f ${LEDGER_FILE} --price-db ${LEDGER_PRICES} \
+--now $NOW -b "$YEAR/01/01" -e $END \
 --balance-format "%(display_total)\n%(display_total / $MONTH)\n" \
 )
 expenses_except_tax_avg=$(echo "$expenses_except_tax_year" | tail -n 1 | sed -e 's/^[ \t]*//')

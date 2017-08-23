@@ -3,35 +3,53 @@
 
 echo -n -e $startBlue"Starting cash flow reports..."$endColor
 
+
 echo "$(/home/matt/Dropbox/journals/finances/accounting/ledger-reports/reports.fi/cash-flow.sh)" \
 > "${month_dir}cash-flow.txt"
 
 check_last_result
+
 
 echo "$(/home/matt/Dropbox/journals/finances/accounting/ledger-reports/reports.fi/cash-flow-market.sh)" \
 > "${month_dir}cash-flow-market.txt"
 
 check_last_result
 
+
+echo "$(/home/matt/Dropbox/journals/finances/accounting/ledger-reports/reports.fi/revenue-ytd.sh)" \
+> "${month_dir}revenues-ytd.txt"
+
+check_last_result
+
+
+
+echo "$(/home/matt/Dropbox/journals/finances/accounting/ledger-reports/reports.fi/expense-ytd.sh)" \
+> "${month_dir}expenses-ytd.txt"
+
+check_last_result
+
+
+
+echo "$(/home/matt/Dropbox/journals/finances/accounting/ledger-reports/reports.fi/gasoline-ytd.sh)" \
+> "${month_dir}gasoline-ytd.txt"
+
+check_last_result
+
+
+echo "$(/home/matt/Dropbox/journals/finances/accounting/ledger-reports/reports.fi/savings-rate.sh)" \
+> "${month_dir}savings-rate.txt"
+
+check_last_result
+
+
+echo "$(/home/matt/Dropbox/journals/finances/accounting/ledger-reports/reports.fi/drawdown.sh)" \
+> "${month_dir}drawdown.txt"
+
+check_last_result
+
+
 echo -e $startGreenBold"DONE"$endColor
 
-
-# echo -n -e $startBlue"Starting cash flow report..."$endColor
-# # cash flow report should be per month
-# ledger bal ^Revenues ^Expenses -p $current_date --now $now_date -c \
-# > $month_dir"cash-flow.txt"
-
-# check_last_result
-# echo -e $startGreenBold"DONE"$endColor
-
-
-# echo -n -e $startBlue"Starting cash flow market report..."$endColor
-# # cash flow report should be per month
-# ledger bal ^Revenues ^Expenses -X $ --price-db $LEDGER_PRICES -p $current_date --now $now_date -c \
-# > $month_dir"cash-flow-market.txt"
-
-# check_last_result
-# echo -e $startGreenBold"DONE"$endColor
 
 
 exit 0
