@@ -10,7 +10,7 @@ end="${until_date}"
 now="${now_date}"
 
 ledger -J bal "${LEDGER_ACCT}" -f "${LEDGER_FILE}" --sort="-abs(amount)" --flat --no-total \
--X $ --price-db "${LEDGER_PRICES}" -b "${begin}" -e "${end}" --now "${now}" --current \
+-X $ --price-db "${LEDGER_PRICES}" -b ${begin} -e ${end} --now ${now} --current \
 --plot-total-format="%(partial_account(options.flat)) %(abs(quantity(scrub(total))))\n" \
 > ledgeroutput1.tmp
 
@@ -23,7 +23,7 @@ ledger -J bal "${LEDGER_ACCT}" -f "${LEDGER_FILE}" --sort="-abs(amount)" --flat 
   set ytics add ('' 0) scale 0
   set border 1
   set grid ytics
-  set title "Histogram of $LEDGER_ACCT"
+  set title "Histogram of ${LEDGER_ACCT}"
   set ylabel "Amount"
   plot "ledgeroutput1.tmp" using 2:xticlabels(1) notitle linecolor rgb "light-turquoise", '' using 0:2:2 with labels font "Courier,8" offset 0,0.5 textcolor linestyle 0 notitle
 EOF

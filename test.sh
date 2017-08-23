@@ -25,6 +25,23 @@ now_date="2017/07/31"
 LEDGER_FILE="/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
 LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
 
+
+LEDGER_ACCT="Expenses"
+begin="${current_date}"
+end="${until_date}"
+now="${now_date}"
+
+ledger bal "${LEDGER_ACCT}" \
+-f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
+--sort="-abs(amount)" --no-total --flat -J -X $ \
+-b ${begin} -e ${end} --now ${now} --current \
+--plot-total-format="%(partial_account(options.flat)) %(abs(quantity(scrub(total))))\n"
+# --plot-total-format="%(partial_account(options.flat)) %(total)\n"
+# --plot-total-format="%(partial_account(options.flat)) %(abs(quantity(scrub(total))))\n"
+# > ledgeroutput1.tmp
+
+
+
 # ledger bal "^Revenues" "^Expenses" \
 # -f $LEDGER_FILE --price-db $LEDGER_PRICES \
 # -X $ \
