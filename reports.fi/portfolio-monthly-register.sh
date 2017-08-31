@@ -1,16 +1,16 @@
 #!/bin/bash
 
 
-LEDGER_FILE="/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
-LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
+# LEDGER_FILE="/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
+# LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
 
-BEGIN="2017/06"
-END="2017/07/01"
-NOW="2017/06/30"
+# BEGIN="2017/06"
+# END="2017/07/01"
+# NOW="2017/06/30"
 
-# BEGIN="${current_date}"
-# END="${until_date}"
-# NOW="${now_date}"
+BEGIN="${current_date}"
+END="${until_date}"
+NOW="${now_date}"
 
 
 printf "\
@@ -21,8 +21,7 @@ printf '=%.0s' {1..80}
 printf "\n"
 
 ledger reg "Assets:Portfolio" \
--f $LEDGER_FILE \
---price-db $LEDGER_PRICES \
+-f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
 -b $BEGIN -e $END --now $NOW --current -T "" \
 --register-format "\
 %-10d \

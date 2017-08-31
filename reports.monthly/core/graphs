@@ -14,19 +14,19 @@ echo "$(/home/matt/Dropbox/journals/finances/accounting/ledger-reports/reports.g
 check_last_result
 
 
-echo "$(/home/matt/Dropbox/journals/finances/accounting/ledger-reports/reports.graph/income-area-plot.sh)" \
-> "${graph_dir}income_area-graph.svg"
+echo "$(/home/matt/Dropbox/journals/finances/accounting/ledger-reports/reports.graph/cash-flow-area.sh)" \
+> "${graph_dir}cash-flow_area-graph.svg"
 
 check_last_result
 
 
-echo "$(/home/matt/Dropbox/journals/finances/accounting/ledger-reports/reports.graph/income-bar-plot.sh)" \
-> "${graph_dir}income_bar-graph.svg"
+echo "$(/home/matt/Dropbox/journals/finances/accounting/ledger-reports/reports.graph/cash-flow-bar.sh)" \
+> "${graph_dir}cash-flow_bar-graph.svg"
 
 check_last_result
 
 
-echo "$(/home/matt/Dropbox/journals/finances/accounting/ledger-reports/reports.graph/net-worth-area-plot.sh)" \
+echo "$(/home/matt/Dropbox/journals/finances/accounting/ledger-reports/reports.graph/net-worth-area.sh)" \
 > "${graph_dir}net-worth_area-graph.svg"
 
 check_last_result

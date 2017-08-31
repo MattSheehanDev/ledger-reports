@@ -11,11 +11,14 @@
 
 YEAR=$year
 MONTH=$month
-DATE_NOW=$now_date
+
+begin="${YEAR}/01/01"
+end="${until_date}"
+now=$now_date
 # YEAR=2016
 # MONTH=12
 # DATE_NOW=$YEAR/$MONTH/31
-DATE_DISPLAY=$YEAR/01/01            # only display transactions from the beginning of the year
+# DATE_DISPLAY=$YEAR/01/01            # only display transactions from the beginning of the year
 
 # if [-z "$LEDGER_TERM" ]; then
 #   LEDGER_TERM="svg enhanced background rgb 'white' size 1280,720"
@@ -26,14 +29,24 @@ LEDGER_PLOT_FORMAT="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(T))
 # Plot assets and liabilities
 # ledger reg -J ^Assets -X $ -M  --now 2016/12/31 -c -n  --no-revalued --immediate
 
-ledger reg ^Assets -M --collapse -J --plot-total-format="$LEDGER_PLOT_FORMAT" \
--f "$LEDGER_FILE" --price-db "$LEDGER_PRICES" \
---display "d>=[$DATE_DISPLAY]" -X $ -R --now "$DATE_NOW" -c --no-revalued \
+# ledger reg ^Assets -M --collapse -J --plot-total-format="$LEDGER_PLOT_FORMAT" \
+# -f "$LEDGER_FILE" --price-db "$LEDGER_PRICES" \
+# --display "d>=[$DATE_DISPLAY]" -X $ -R --now "$DATE_NOW" -c --no-revalued \
+ledger reg "^Assets" \
+-f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
+-M --collapse -J -X $ -R --no-revalued \
+-e "${end}" --now "${now}" --display "d>=[${begin}]" --current \
+--plot-total-format="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(T))))\n" \
 > ledgeroutput1.tmp
 
-ledger reg ^Liabilities -M --collapse -J --plot-total-format="$LEDGER_PLOT_FORMAT" \
--f "$LEDGER_FILE" --price-db "$LEDGER_PRICES" \
---display "d>=[$DATE_DISPLAY]" -X $ -R --now "$DATE_NOW" -c --no-revalued \
+# ledger reg ^Liabilities -M --collapse -J --plot-total-format="$LEDGER_PLOT_FORMAT" \
+# -f "$LEDGER_FILE" --price-db "$LEDGER_PRICES" \
+# --display "d>=[$DATE_DISPLAY]" -X $ -R --now "$DATE_NOW" -c --no-revalued \
+ledger reg "^Liabilities" \
+-f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
+-M --collapse -J -X $ -R --no-revalued \
+-e "${end}" --now "${now}" --display "d>=[${begin}]" --current \
+--plot-total-format="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(T))))\n" \
 > ledgeroutput2.tmp
 
 

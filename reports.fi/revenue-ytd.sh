@@ -4,16 +4,16 @@
 ## Total and average YTD revenues
 ##
 
-LEDGER_FILE="/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
-LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
+# LEDGER_FILE="/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
+# LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
 
-END="2017/08/01"
-YEAR=2017
-MONTH=07
+# END="2017/08/01"
+# YEAR=2017
+# MONTH=07
 
-# END="${until_date}"
-# YEAR=$year
-# MONTH=$month
+END="${until_date}"
+YEAR=$year
+MONTH=$month
 
 
 

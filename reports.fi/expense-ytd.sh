@@ -1,21 +1,21 @@
 #!/bin/bash
 
 
-LEDGER_FILE="/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
-LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
+# LEDGER_FILE="/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
+# LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
 
-END="2017/08/01"
-YEAR=2017
-MONTH=07
+# END="2017/08/01"
+# YEAR=2017
+# MONTH=07
 
 
-# # remember that -b is inclusive and -e is exclusive.
-# # so -b 2016/01/01 -e 2017/01/01, starts on the first of 2016 and
-# # goes UP TO but not including the first of 2017.
-# END="${until_date}"
+# remember that -b is inclusive and -e is exclusive.
+# so -b 2016/01/01 -e 2017/01/01, starts on the first of 2016 and
+# goes UP TO but not including the first of 2017.
+END="${until_date}"
 
-# YEAR=$year
-# MONTH=$month
+YEAR=$year
+MONTH=$month
 
 
 
@@ -26,7 +26,7 @@ printf "\n"
 
 ledger bal "^Expenses" \
 -f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
--R --pedantic --no-total -b "${YEAR}/01/01" -e $END -X $ \
+-R --pedantic --no-total -b "${YEAR}/01/01" -e ${END} -X $ \
 --balance-format "\
 %(justify((display_total), 11, -1, true, false)) \
 %(justify((display_total / ${MONTH}), 11, -1, true, false)) \

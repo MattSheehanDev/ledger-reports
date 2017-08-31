@@ -8,7 +8,10 @@
 
 YEAR=$year
 MONTH=$month
-DATE_NOW=$now_date
+
+begin="${YEAR}/01/01"
+end="${until_date}"
+now="${now_date}"
 # YEAR=2016
 # MONTH=12
 # DATE_NOW=$year/$month/31
@@ -17,17 +20,27 @@ DATE_NOW=$now_date
 #   LEDGER_TERM="qt size 1280,720 persist"
 # fi
 LEDGER_TERM="svg enhanced background rgb 'white' size 1280,720"
-LEDGER_PLOT_FORMAT="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(scrub(t)))))\n"
+# LEDGER_PLOT_FORMAT="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(scrub(t)))))\n"
 
 
-ledger reg ^Revenues -M --collapse -j --plot-amount-format="$LEDGER_PLOT_FORMAT" \
--f "$LEDGER_FILE" --price-db "$LEDGER_PRICES" \
--X $ -R --now $DATE_NOW -c -p $YEAR --no-revalued \
+# ledger reg ^Revenues -M --collapse -j --plot-amount-format="$LEDGER_PLOT_FORMAT" \
+# -f "$LEDGER_FILE" --price-db "$LEDGER_PRICES" \
+# -X $ -R --now $DATE_NOW -c -p $YEAR --no-revalued \
+ledger reg "^Revenues" \
+-f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
+-M --collapse -j -X $ -R --no-revalued \
+-b ${begin} -e ${end} --now ${now} --current \
+--plot-amount-format="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(scrub(t)))))\n" \
 > ledgeroutput1.tmp
 
-ledger reg ^Expenses -M --collapse -j --plot-amount-format="$LEDGER_PLOT_FORMAT" \
--f "$LEDGER_FILE" --price-db "$LEDGER_PRICES" \
--X $ -R --now $DATE_NOW -c -p $YEAR --no-revalued \
+# ledger reg ^Expenses -M --collapse -j --plot-amount-format="$LEDGER_PLOT_FORMAT" \
+# -f "$LEDGER_FILE" --price-db "$LEDGER_PRICES" \
+# -X $ -R --now $DATE_NOW -c -p $YEAR --no-revalued \
+ledger reg "^Expenses" \
+-f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
+-M --collapse -j -X $ -R --no-revalued \
+-b ${begin} -e ${end} --now ${now} --current \
+--plot-amount-format="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(scrub(t)))))\n" \
 > ledgeroutput2.tmp
 
 (cat <<EOF) | gnuplot

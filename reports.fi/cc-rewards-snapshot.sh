@@ -1,15 +1,15 @@
 #!/bin/bash
 
 
-LEDGER_FILE="/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
-LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
+# LEDGER_FILE="/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
+# LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
 
-END="2017/07/01"
-NOW="2017/06/30"
+# END="2017/07/01"
+# NOW="2017/06/30"
 
 
-# END=$until_date
-# NOW=$now_date
+END="${until_date}"
+NOW="${now_date}"
 
 
 total_rewards_dirty=$(\

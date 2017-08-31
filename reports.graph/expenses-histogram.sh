@@ -9,9 +9,14 @@ begin="${current_date}"
 end="${until_date}"
 now="${now_date}"
 
-ledger -J bal "${LEDGER_ACCT}" -f "${LEDGER_FILE}" --sort="-abs(amount)" --flat --no-total \
--X $ --price-db "${LEDGER_PRICES}" -b ${begin} -e ${end} --now ${now} --current \
---plot-total-format="%(partial_account(options.flat)) %(abs(quantity(scrub(total))))\n" \
+# ledger -J bal "${LEDGER_ACCT}" -f "${LEDGER_FILE}" --sort="-abs(amount)" --flat --no-total \
+# -X $ --price-db "${LEDGER_PRICES}" -b ${begin} -e ${end} --now ${now} --current \
+# --plot-total-format="%(partial_account(options.flat)) %(abs(quantity(scrub(total))))\n" \
+ledger bal "${LEDGER_ACCT}" \
+-f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
+--sort="-abs(amount)" --no-total --flat -J -X $ \
+-b ${begin} -e ${end} --now ${now} --current \
+--plot-total-format="%(partial_account(options.flat)) %(abs(quantity(scrub(display_total))))\n" \
 > ledgeroutput1.tmp
 
 (cat <<EOF) | gnuplot

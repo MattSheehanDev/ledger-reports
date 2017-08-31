@@ -27,18 +27,51 @@ LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/price
 
 
 LEDGER_ACCT="Expenses"
+DATE_DISPLAY="${YEAR}/01/01"
 begin="${current_date}"
 end="${until_date}"
 now="${now_date}"
 
-ledger bal "${LEDGER_ACCT}" \
+
+ledger reg "^Expenses" \
 -f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
---sort="-abs(amount)" --no-total --flat -J -X $ \
--b ${begin} -e ${end} --now ${now} --current \
---plot-total-format="%(partial_account(options.flat)) %(abs(quantity(scrub(total))))\n"
+-M --collapse -J -X $ -R --no-revalued \
+-b "${begin}" -e "${end}" --now "${now}" --current \
+--plot-total-format="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(T))))\n"
+# ledger reg "^Assets" \
+# -f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
+# -M --collapse -J -X $ -R --no-revalued \
+# -e "${end}" --now "${now}" --display "d>=[$DATE_DISPLAY]" --current \
+# --plot-total-format="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(T))))\n"
+# echo ""
+# ledger reg "^Liabilities" \
+# -f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
+# -M --collapse -J -X $ -R --no-revalued \
+# -e "${end}" --now "${now}" --display "d>=[$DATE_DISPLAY]" --current \
+# --plot-total-format="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(T))))\n"
+# --display "d>=[$DATE_DISPLAY]" \
+
+# ledger bal "${LEDGER_ACCT}" \
+# -f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
+# --sort="-abs(amount)" --no-total --flat -J -X $ \
+# -b ${begin} -e ${end} --now ${now} --current \
+# --plot-total-format="%(partial_account(options.flat)) %(abs(quantity(scrub(display_total))))\n"
+
 # --plot-total-format="%(partial_account(options.flat)) %(total)\n"
 # --plot-total-format="%(partial_account(options.flat)) %(abs(quantity(scrub(total))))\n"
 # > ledgeroutput1.tmp
+
+
+# ledger reg "^Assets:Portfolio:Vanguard:SEP IRA" \
+# -f ${LEDGER_FILE} --price-db ${LEDGER_PRICES} \
+# --limit "commodity=~/BLV/" -T "" \
+# --register-format "\
+# %-10d \
+# %-26(truncated(display_account, int(25), int(2))) \
+# %-10(tag(\"TYPE\")) \
+# %-14(roundto(strip(display_amount), 4)) \
+# %-10(roundto(lot_price(amount, amount), 4)) \
+# %-10(roundto(price, 4))\n"
 
 
 
