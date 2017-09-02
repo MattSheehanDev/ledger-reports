@@ -10,8 +10,8 @@ source "${LEDGERSCRIPTS_REPORTS_DIR}helpers.sh"
 dates=($(parse_date $1))
 export year=${dates[0]}
 export month=${dates[1]}
-month_long=${dates[2]}
-month_last_day=${dates[3]}
+export month_long=${dates[2]}
+export month_last_day=${dates[3]}
 
 #
 # If year or month does not exist then explicitly ask for them
@@ -24,8 +24,8 @@ if [[ -z $year ]] || [[ -z $month ]]; then
   dates=($(parse_date $yearmonth))
   export year=${dates[0]}
   export month=${dates[1]}
-  month_long=${dates[2]}
-  month_last_day=${dates[3]}
+  export month_long=${dates[2]}
+  export month_last_day=${dates[3]}
 fi
 
 

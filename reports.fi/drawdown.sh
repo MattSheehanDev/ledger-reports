@@ -62,7 +62,7 @@ required_drawdown_avg=$(echo "(($expenses_except_tax_avg * 12) / $net_worth) * 1
 required_drawdown=$(echo "(($monthly_expenses_except_tax * 12) / $net_worth) * 100" | bc -l)
 
 
-pformat="%-30s %11s %11s\n"
+pformat="%-30s %12s %12s\n"
 
 printf "$pformat" "" "Average" "$MONTH_LONG"
 printf '=%.0s' {1..80}
