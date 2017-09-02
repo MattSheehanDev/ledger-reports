@@ -32,17 +32,19 @@ begin="${current_date}"
 end="${until_date}"
 now="${now_date}"
 
+BEGIN=$begin
 END=$end
 NOW=$now
 
 
-withdrawal_amount_monthly=$(\
-ledger bal "^Assets" "^Liabilities" -X $ -c --price-db $LEDGER_PRICES -f $LEDGER_FILE \
---now $NOW -e $END \
---balance-format "%/%(quantity(display_total * 0.0385 / 12)) \n" \
+taxes_and_deductions=$(\
+ledger bal "/^Expenses:(Tax:(?!Sales)|Deductions)/" -X $ --invert -c \
+-f ${LEDGER_FILE} --price-db ${LEDGER_PRICES} \
+--now $NOW -b "$YEAR/01/01" -e $END \
+--balance-format "%(display_total)\n%(display_total / $MONTH)\n" \
+| tail -n 2 \
 )
-# echo $withdrawal_amount_monthly
-printf "$%'.2f%%\n" $withdrawal_amount_monthly
+echo "$taxes_and_deductions"
 # ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" -X $ --invert -c \
 # -f $LEDGER_FILE --price-db $LEDGER_PRICES \
 # --now $NOW -b "$YEAR/01/01" -e $END \
