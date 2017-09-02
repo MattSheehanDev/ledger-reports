@@ -32,12 +32,29 @@ begin="${current_date}"
 end="${until_date}"
 now="${now_date}"
 
+END=$end
+NOW=$now
 
-ledger reg "^Expenses" \
--f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
--M --collapse -J -X $ -R --no-revalued \
--b "${begin}" -e "${end}" --now "${now}" --current \
---plot-total-format="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(T))))\n"
+
+withdrawal_amount_monthly=$(\
+ledger bal "^Assets" "^Liabilities" -X $ -c --price-db $LEDGER_PRICES -f $LEDGER_FILE \
+--now $NOW -e $END \
+--balance-format "%/%(quantity(display_total * 0.0385 / 12)) \n" \
+)
+# echo $withdrawal_amount_monthly
+printf "$%'.2f%%\n" $withdrawal_amount_monthly
+# ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" -X $ --invert -c \
+# -f $LEDGER_FILE --price-db $LEDGER_PRICES \
+# --now $NOW -b "$YEAR/01/01" -e $END \
+# --balance-format "%(display_total / $MONTH)\n" \
+# | tail -n 1 | sed -e 's/^[ \t]*//'
+
+# ledger reg "^Expenses" \
+# -f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
+# -M --collapse -J -X $ -R --no-revalued \
+# -b "${begin}" -e "${end}" --now "${now}" --current \
+# --plot-total-format="%(format_date(date, \"%Y-%m-%d\")) %((((T))))\n"
+
 # ledger reg "^Assets" \
 # -f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
 # -M --collapse -J -X $ -R --no-revalued \
