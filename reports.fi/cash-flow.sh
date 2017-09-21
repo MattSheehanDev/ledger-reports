@@ -11,6 +11,6 @@ NOW="${now_date}"
 
 
 ledger bal "^Revenues" "^Expenses" \
--f $LEDGER_FILE --price-db $LEDGER_PRICES \
+-f $LEDGER_FILE --price-db $LEDGER_PRICES --exchange " " \
 -p "this month" --now $NOW -c
 

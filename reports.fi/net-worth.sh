@@ -12,6 +12,6 @@ NOW="${now_date}"
 
 
 ledger bal "^Assets" "^Liabilities" \
--f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
+-f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" --exchange " " \
 -e $END --now $NOW --current
 
