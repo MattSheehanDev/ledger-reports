@@ -1,9 +1,6 @@
 #!/bin/bash
 
 
-# LEDGER_FILE="/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
-# LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
-
 END="2017/10/01"
 YEAR=2017
 MONTH=9
@@ -23,8 +20,7 @@ printf "%-9s %-7s %-s\n" "Gallons" "$/Gal" "Automobile"
 printf '=%.0s' {1..80}
 printf "\n"
 
-ledger bal "^Expenses:Auto:Gas" \
--f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" --exchange " " \
+ledger bal "^Expenses:Auto:Gas" --exchange " " \
 --pivot VEHICLE -b "${YEAR}/01/01" -e ${END} \
 --balance-format "\
 %-9(roundto(round(quantity(market(display_total, date, 'GAL'))), 2)) \

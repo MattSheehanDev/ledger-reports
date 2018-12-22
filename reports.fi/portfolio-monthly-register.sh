@@ -1,9 +1,6 @@
 #!/bin/bash
 
 
-# LEDGER_FILE="/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
-# LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
-
 # BEGIN="2017/09"
 # END="2017/10/01"
 # NOW="2017/09/30"
@@ -21,7 +18,7 @@ printf '=%.0s' {1..80}
 printf "\n"
 
 ledger reg "Assets:Portfolio" \
--f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" --exchange " " --unround \
+--exchange " " --unround \
 -b $BEGIN -e $END --now $NOW --current \
 --register-format "\
 %-10d \

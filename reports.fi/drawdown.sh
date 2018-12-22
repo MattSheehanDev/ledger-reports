@@ -9,10 +9,6 @@ YEAR=${year}
 MONTH=${month}
 MONTH_LONG="${month_long}"
 
-
-# LEDGER_FILE="$HOME/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
-# LEDGER_PRICES="$HOME/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
-
 # BEGIN="2017/06"
 # END="2017/07/01"
 # NOW="2017/06/30"
@@ -27,30 +23,29 @@ withdrawal_rate="0.0385"
 withdrawal_rate_percent=$(printf "%.*f\n" 2 $(echo "$withdrawal_rate*100" | bc -l))
 
 net_worth=$(\
-ledger bal ^Assets ^Liabilities -X $ --price-db ${LEDGER_PRICES} -f ${LEDGER_FILE} \
+ledger bal ^Assets ^Liabilities \
 --now $NOW -e $END --current \
 --balance-format "%(quantity(display_total))\n" \
 | tail -n 1 | sed -e 's/^[ \t]*//' \
 )
 
 monthly_expenses_except_tax=$(\
-ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" -X $ -c \
--f $LEDGER_FILE --price-db $LEDGER_PRICES -p $BEGIN --now $NOW -e $END \
+ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" \
+-c -p $BEGIN --now $NOW -e $END \
 --balance-format "%(quantity(display_total))\n" \
 | tail -n 1 | sed -e 's/^[ \t]*//' \
 )
 
 expenses_except_tax_avg=$(\
-ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" -X $ -c \
--f $LEDGER_FILE --price-db $LEDGER_PRICES \
---now $NOW -b "$YEAR/01/01" -e $END \
+ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" \
+-c --now $NOW -b "$YEAR/01/01" -e $END \
 --balance-format "%(quantity(display_total / $MONTH))\n" \
 | tail -n 1 | sed -e 's/^[ \t]*//' \
 )
 
 withdrawal_amount_monthly=$(\
-ledger bal "^Assets" "^Liabilities" -X $ -c --price-db $LEDGER_PRICES -f $LEDGER_FILE \
---now $NOW -e $END \
+ledger bal "^Assets" "^Liabilities" \
+-c --now $NOW -e $END \
 --balance-format "%/%(quantity(display_total * 0.0385 / 12)) \n" \
 )
 

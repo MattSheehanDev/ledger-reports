@@ -1,9 +1,6 @@
 #!/bin/bash
 
 
-# LEDGER_FILE="/home/matt/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
-# LEDGER_PRICES="/home/matt/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
-
 # END="2017/08/01"
 # YEAR=2017
 # MONTH=07
@@ -25,8 +22,7 @@ printf '=%.0s' {1..80}
 printf "\n"
 
 ledger bal "^Expenses" \
--f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
--R --pedantic --no-total -b "${YEAR}/01/01" -e ${END} -X $ \
+-R --pedantic --no-total -b "${YEAR}/01/01" -e ${END} \
 --balance-format "\
 %(justify((display_total), 11, -1, true, false)) \
 %(justify((display_total / ${MONTH}), 11, -1, true, false)) \
