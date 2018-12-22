@@ -2,7 +2,7 @@
 # Last modified: 2016/12/03 01:31:16 UTC
 
 # source "$HOME/Dropbox/projects/ledger-reports/helpers.sh"
-source "${LEDGERSCRIPTS_REPORTS_DIR}helpers.sh"
+source "${LEDGERSCRIPTS_REPORTS_DIR}/helpers.sh"
 
 #
 # Parse date (if passed in as argument)
@@ -54,22 +54,33 @@ export until_date="$until_year/$until_month/01"
 #
 # Create directory structure
 #
-. "${LEDGERSCRIPTS_REPORTS_DIR}directory.sh"
+. "${LEDGERSCRIPTS_REPORTS_DIR}/directory.sh"
 # . "$HOME/Dropbox/projects/ledger-reports/directory.sh"
 
 
 
-##
-## Ledger reports
-## run each executable in the reports.monthly directory,
-## including subdirectories
-##
-# for i in $(find /home/matt/Dropbox/projects/ledger-reports/reports.monthly); do
-for i in $(find "${LEDGERSCRIPTS_REPORTS_DIR}reports.monthly/core"); do
-  if [[ -d "$i" ]]; then
-    run-parts --exit-on-error --new-session "$i"
-    # run-parts --exit-on-error --new-session "$i"
-  fi
+# ##
+# ## Ledger reports
+# ## run each executable in the reports.monthly directory,
+# ## including subdirectories
+# ##
+# # for i in $(find /home/matt/Dropbox/projects/ledger-reports/reports.monthly); do
+# for i in $(find "${LEDGERSCRIPTS_REPORTS_DIR}/reports.monthly/core"); do
+#   if [[ -d "$i" ]]; then
+#     run-parts --exit-on-error --new-session "$i"
+#     # run-parts --exit-on-error --new-session "$i"
+#   fi
+# done
+echo "YEAR: ${year}"
+echo "MONTH: ${month}"
+echo "${month_dir}"
+
+for script in $LEDGERSCRIPTS_REPORTS_DIR/reports.monthly/core/*
+do
+    if [[ -f $script ]]
+    then
+        $script
+    fi
 done
 
 # # ## Graphs

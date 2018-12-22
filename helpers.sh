@@ -2,14 +2,15 @@
 
 
 # Colors for reporting to the terminal
-export startBlue="\e[34m"
+export startBlue=$'\e[34m'
+# export startBlue=$'\e[1;31m'
 export startBlueBold="\e[32;01m;"
 export startGreen="\e[32m"
-export startGreenBold="\e[32;01m"
-export startGreenBlack="\e[32;40;01m"   # green foreground w/ black background
+export startGreenBold=$'\e[32;01m'
+export startGreenBlack=$'\e[32;40;01m'   # green foreground w/ black background
 export startRed="\e[31m"
 export startRedBold="\e[31;01m"
-export endColor="\e[m"
+export endColor=$'\e[m'
 
 # Array of month names
 declare months_long
@@ -46,7 +47,8 @@ month_days[12]=31
 # Helper Functions
 #
 create_dir(){
-  if [ ! -d $1 ]; then
+  if [ ! -d $1 ]
+  then
     # echo "Creating directory $1"
     mkdir -p $1
   fi

@@ -15,13 +15,13 @@
 
 echo -n -e $startBlue"Starting net worth reports..."$endColor
 
-echo "$(/home/matt/Dropbox/journals/finances/accounting/ledger-reports/reports.fi/net-worth.sh)" \
-> "${month_dir}net-worth.txt"
+echo "$(~/Dropbox/Finances/accounting/ledger-reports/reports.fi/net-worth.sh)" \
+> "${month_dir}/net-worth.txt"
 
 check_last_result
 
-echo "$(/home/matt/Dropbox/journals/finances/accounting/ledger-reports/reports.fi/net-worth-market.sh)" \
-> "${month_dir}net-worth-market.txt"
+echo "$(~/Dropbox/Finances/accounting/ledger-reports/reports.fi/net-worth-market.sh)" \
+> "${month_dir}/net-worth-market.txt"
 
 check_last_result
 

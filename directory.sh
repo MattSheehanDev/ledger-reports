@@ -6,10 +6,10 @@
 # Create the year directory first
 # This way we can organize by ~/year/month/
 #
-export year_dir="${LEDGER_REPORTS_DIR}FY${year}/"
+export year_dir="${LEDGER_REPORTS_DIR}/FY${year}"
 create_dir $year_dir
 
-export month_dir="$year_dir$month_long/"
+export month_dir="$year_dir/$month_long"
 create_dir $month_dir
 
 # export graph_dir="${month_dir}Graphs/"
