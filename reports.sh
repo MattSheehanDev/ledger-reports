@@ -75,7 +75,7 @@ echo "YEAR: ${year}"
 echo "MONTH: ${month}"
 echo "${month_dir}"
 
-for script in $LEDGERSCRIPTS_REPORTS_DIR/reports.monthly/core/*
+for script in $LEDGERSCRIPTS_REPORTS_DIR/reports.monthly/*
 do
     if [[ -f $script ]]
     then
