@@ -10,3 +10,7 @@
 
 ### Symlinks ###
 .bashrc
+
+
+reports.deprecated/**/*
+
