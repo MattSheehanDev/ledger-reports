@@ -29,18 +29,14 @@ LEDGER_PLOT_FORMAT="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(T))
 # Plot assets and liabilities
 # ledger reg -J ^Assets -X $ -M  --now 2016/12/31 -c -n  --no-revalued --immediate
 
-# ledger reg ^Assets -M --collapse -J --plot-total-format="$LEDGER_PLOT_FORMAT" \
-# -f "$LEDGER_FILE" --price-db "$LEDGER_PRICES" \
-# --display "d>=[$DATE_DISPLAY]" -X $ -R --now "$DATE_NOW" -c --no-revalued \
+
 ledger reg "^Assets" \
 -M --collapse -J -R --no-revalued \
 -e "${end}" --now "${now}" --display "d>=[${begin}]" --current \
 --plot-total-format="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(T))))\n" \
 > ledgeroutput1.tmp
 
-# ledger reg ^Liabilities -M --collapse -J --plot-total-format="$LEDGER_PLOT_FORMAT" \
-# -f "$LEDGER_FILE" --price-db "$LEDGER_PRICES" \
-# --display "d>=[$DATE_DISPLAY]" -X $ -R --now "$DATE_NOW" -c --no-revalued \
+
 ledger reg "^Liabilities" \
 -M --collapse -J -R --no-revalued \
 -e "${end}" --now "${now}" --display "d>=[${begin}]" --current \

@@ -3,7 +3,7 @@
 echo -n -e $startBlue"Starting monthly portfolio register..."$endColor
 
 
-echo "$(../reports.fi/portfolio-monthly-register.sh)" \
+echo "$($(pwd)/reports.fi/portfolio-monthly-register.sh)" \
 > "${month_dir}/portfolio-monthly-register.txt"
 
 check_last_result

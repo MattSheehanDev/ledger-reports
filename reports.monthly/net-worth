@@ -15,12 +15,12 @@
 
 echo -n -e $startBlue"Starting net worth reports..."$endColor
 
-echo "$(../reports.fi/net-worth.sh)" \
+echo "$($(pwd)/reports.fi/net-worth.sh)" \
 > "${month_dir}/net-worth.txt"
 
 check_last_result
 
-echo "$(../reports.fi/net-worth-market.sh)" \
+echo "$($(pwd)/reports.fi/net-worth-market.sh)" \
 > "${month_dir}/net-worth-market.txt"
 
 check_last_result
