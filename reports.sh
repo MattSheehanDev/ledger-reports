@@ -52,9 +52,18 @@ export until_date="$until_year/$until_month/01"
 
 
 #
-# Create directory structure
+# CREATE DIRECTORY STRUCTURE
 #
-. "${LEDGERSCRIPTS_REPORTS_DIR}/directory.sh"
+# Create the year directory first
+# This way we can organize by ~/year/month/
+#
+export year_dir="${LEDGER_REPORTS_DIR}/FY${year}"
+create_dir $year_dir
+
+export month_dir="$year_dir/$month_long"
+create_dir $month_dir
+
+# . "${LEDGERSCRIPTS_REPORTS_DIR}/directory.sh"
 # . "$HOME/Dropbox/projects/ledger-reports/directory.sh"
 
 

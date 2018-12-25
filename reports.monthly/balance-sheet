@@ -4,19 +4,19 @@
 echo -n -e $startBlue"Starting balance sheet reports..."$endColor
 
 
-echo "$(~/Dropbox/Finances/accounting/ledger-reports/reports.fi/balance-sheet.sh)" \
+echo "$(../reports.fi/balance-sheet.sh)" \
 > "${month_dir}/balance-sheet.txt"
 
 check_last_result
 
 
-echo "$(~/Dropbox/Finances/accounting/ledger-reports/reports.fi/balance-sheet-market.sh)" \
+echo "$(../reports.fi/balance-sheet-market.sh)" \
 > "${month_dir}/balance-sheet-market.txt"
 
 check_last_result
 
 
-echo "$(~/Dropbox/Finances/accounting/ledger-reports/reports.fi/cc-rewards-snapshot.sh)" \
+echo "$(../reports.fi/cc-rewards-snapshot.sh)" \
 > "${month_dir}/cc-rewards-snapshot.txt"
 
 check_last_result

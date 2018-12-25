@@ -33,8 +33,7 @@ LEDGER_PLOT_FORMAT="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(T))
 # -f "$LEDGER_FILE" --price-db "$LEDGER_PRICES" \
 # --display "d>=[$DATE_DISPLAY]" -X $ -R --now "$DATE_NOW" -c --no-revalued \
 ledger reg "^Assets" \
--f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
--M --collapse -J -X $ -R --no-revalued \
+-M --collapse -J -R --no-revalued \
 -e "${end}" --now "${now}" --display "d>=[${begin}]" --current \
 --plot-total-format="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(T))))\n" \
 > ledgeroutput1.tmp
@@ -43,8 +42,7 @@ ledger reg "^Assets" \
 # -f "$LEDGER_FILE" --price-db "$LEDGER_PRICES" \
 # --display "d>=[$DATE_DISPLAY]" -X $ -R --now "$DATE_NOW" -c --no-revalued \
 ledger reg "^Liabilities" \
--f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
--M --collapse -J -X $ -R --no-revalued \
+-M --collapse -J -R --no-revalued \
 -e "${end}" --now "${now}" --display "d>=[${begin}]" --current \
 --plot-total-format="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(T))))\n" \
 > ledgeroutput2.tmp
