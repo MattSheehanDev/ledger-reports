@@ -8,25 +8,25 @@ export graph_dir="${month_dir}/Graphs"
 create_dir $graph_dir
 
 
-echo "$(~/Dropbox/Finances/accounting/ledger-reports/reports.graph/expenses-histogram.sh)" \
+echo "$($cwd/reports.graph/expenses-histogram.sh)" \
 > "${graph_dir}/monthly-expenses_histogram.svg"
 
 check_last_result
 
 
-echo "$(~/Dropbox/Finances/accounting/ledger-reports/reports.graph/cash-flow-area.sh)" \
+echo "$($cwd/reports.graph/cash-flow-area.sh)" \
 > "${graph_dir}/cash-flow_area-graph.svg"
 
 check_last_result
 
 
-echo "$(~/Dropbox/Finances/accounting/ledger-reports/reports.graph/cash-flow-bar.sh)" \
+echo "$($cwd/reports.graph/cash-flow-bar.sh)" \
 > "${graph_dir}/cash-flow_bar-graph.svg"
 
 check_last_result
 
 
-echo "$(~/Dropbox/Finances/accounting/ledger-reports/reports.graph/net-worth-area.sh)" \
+echo "$($cwd/reports.graph/net-worth-area.sh)" \
 > "${graph_dir}/net-worth_area-graph.svg"
 
 check_last_result

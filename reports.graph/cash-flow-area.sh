@@ -23,22 +23,15 @@ LEDGER_TERM="svg enhanced background rgb 'white' size 1280,720"
 # LEDGER_PLOT_FORMAT="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(T))))\n"
 
 
-# ledger reg ^Revenues -M --collapse -J --plot-total-format="$LEDGER_PLOT_FORMAT" \
-# -f "$LEDGER_FILE" --price-db "$LEDGER_PRICES" \
-# -X $ -R --now $now -c -p $YEAR --no-revalued \
 ledger reg "^Revenues" \
--f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
--M --collapse -J -X $ -R --no-revalued \
+-M --collapse -J -R --no-revalued \
 -b "${begin}" -e "${end}" --now "${now}" --current \
 --plot-total-format="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(T))))\n" \
 > ledgeroutput1.tmp
 
-# ledger reg ^Expenses -M --collapse -J --plot-total-format="$LEDGER_PLOT_FORMAT" \
-# -f "$LEDGER_FILE" --price-db "$LEDGER_PRICES" \
-# -X $ -R --now $now -c -p $YEAR --no-revalued \
+
 ledger reg "^Expenses" \
--f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" \
--M --collapse -J -X $ -R --no-revalued \
+-M --collapse -J -R --no-revalued \
 -b "${begin}" -e "${end}" --now "${now}" --current \
 --plot-total-format="%(format_date(date, \"%Y-%m-%d\")) %(to_int(abs(quantity(T))))\n" \
 > ledgeroutput2.tmp

@@ -10,9 +10,6 @@ MONTH=${month}
 MONTH_LONG="${month_long}"
 
 
-# LEDGER_FILE="$HOME/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
-# LEDGER_PRICES="$HOME/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
-
 # BEGIN="2017/06"
 # END="2017/07/01"
 # NOW="2017/06/30"
@@ -24,46 +21,44 @@ MONTH_LONG="${month_long}"
 
 # take the last line and remove spaces
 income_before_tax_month=$(\
-ledger bal "/^Revenues/" -X $ -c \
--f "${LEDGER_FILE}" --price-db "${LEDGER_PRICES}" -b $BEGIN -e $END --now $NOW \
+ledger bal "/^Revenues/" \
+-c -b $BEGIN -e $END --now $NOW \
 --balance-format "%(abs(quantity(display_total)))\n" \
 | tail -n 1 | sed -e 's/^[ \t]*//' \
 )
 
 taxes_and_deductions_month=$(\
-ledger bal "/^Expenses:(Tax:(?!Sales)|Deductions)/" -X $ -c \
--f ${LEDGER_FILE} --price-db ${LEDGER_PRICES} \
---now $NOW -b $BEGIN -e $END \
+ledger bal "/^Expenses:(Tax:(?!Sales)|Deductions)/" \
+-c --now $NOW -b $BEGIN -e $END \
 --balance-format "%(abs(quantity(display_total)))\n" \
 | tail -n 1 | sed -e 's/^[ \t]*//' \
 )
 
 income_after_tax_month=$(\
-ledger bal "/^Revenues/" "/^Expenses:(Tax:(?!Sales)|Deductions)/" -X $ \
--f ${LEDGER_FILE} --price-db ${LEDGER_PRICES} -b $BEGIN -e $END --now $NOW -c \
+ledger bal "/^Revenues/" "/^Expenses:(Tax:(?!Sales)|Deductions)/" \
+-b $BEGIN -e $END --now $NOW -c \
 --balance-format "%(abs(quantity(display_total)))\n" \
 | tail -n 1 | sed -e 's/^[ \t]*//' \
 )
 
 expenses_except_tax_month=$(\
-ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" -X $ -c \
--f ${LEDGER_FILE} --price-db ${LEDGER_PRICES} -p $BEGIN --now $NOW -e $END \
+ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" \
+-c -p $BEGIN --now $NOW -e $END \
 --balance-format "%(abs(quantity(display_total)))\n" \
 | tail -n 1 | sed -e 's/^[ \t]*//' \
 )
 
 income_after_expenses_month=$(\
-ledger bal ^Revenues ^Expenses -X $ \
---price-db ${LEDGER_PRICES} -b $BEGIN -e $END --now $NOW -c \
+ledger bal ^Revenues ^Expenses \
+-b $BEGIN -e $END --now $NOW -c \
 --balance-format "%(abs(quantity(display_total)))\n" \
 | tail -n 1 | sed -e 's/^[ \t]*//' \
 )
 
 
 income_before_tax=$(\
-ledger bal "/^Revenues/" -X $ -c \
--f ${LEDGER_FILE} --price-db ${LEDGER_PRICES} \
---now $NOW -b "$YEAR/01/01" -e $END \
+ledger bal "/^Revenues/" \
+-c --now $NOW -b "$YEAR/01/01" -e $END \
 --balance-format "%(abs(quantity(display_total)))\n%(abs(quantity(display_total / $MONTH)))\n" \
 | tail -n 2 \
 )
@@ -71,9 +66,8 @@ income_before_tax_total=$(echo "$income_before_tax" | head -n 1 | sed -e 's/^[ \
 income_before_tax_avg=$(echo "$income_before_tax" | tail -n 1 | sed -e 's/^[ \t]*//')
 
 taxes_and_deductions=$(\
-ledger bal "/^Expenses:(Tax:(?!Sales)|Deductions)/" -X $ -c \
--f ${LEDGER_FILE} --price-db ${LEDGER_PRICES} \
---now $NOW -b "$YEAR/01/01" -e $END \
+ledger bal "/^Expenses:(Tax:(?!Sales)|Deductions)/" \
+-c --now $NOW -b "$YEAR/01/01" -e $END \
 --balance-format "%(abs(quantity(display_total)))\n%(abs(quantity(display_total / $MONTH)))\n" \
 | tail -n 2 \
 )
@@ -81,9 +75,8 @@ taxes_and_deductions_avg=$(echo "$taxes_and_deductions" | tail -n 1 | sed -e 's/
 taxes_and_deductions_total=$(echo "$taxes_and_deductions" | head -n 1 | sed -e 's/^[ \t]*//')
 
 income_after_tax=$(\
-ledger bal "/^Revenues/" "/^Expenses:(Tax:(?!Sales)|Deductions)/" -X $ -c \
--f ${LEDGER_FILE} --price-db ${LEDGER_PRICES} \
---now $NOW -b "$YEAR/01/01" -e $END \
+ledger bal "/^Revenues/" "/^Expenses:(Tax:(?!Sales)|Deductions)/" \
+-c --now $NOW -b "$YEAR/01/01" -e $END \
 --balance-format "%(abs(quantity(display_total)))\n%(abs(quantity(display_total / $MONTH)))\n" \
 | tail -n 2 \
 )
@@ -91,17 +84,15 @@ income_after_tax_total=$(echo "$income_after_tax" | head -n 1 | sed -e 's/^[ \t]
 income_after_tax_avg=$(echo "$income_after_tax" | tail -n 1 | sed -e 's/^[ \t]*//')
 
 expenses_except_tax=$(\
-ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" -X $ -c \
--f ${LEDGER_FILE} --price-db ${LEDGER_PRICES} \
---now $NOW -b "$YEAR/01/01" -e $END \
+ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" \
+-c --now $NOW -b "$YEAR/01/01" -e $END \
 --balance-format "%(abs(quantity(display_total)))\n%(abs(quantity(display_total / $MONTH)))\n" \
 )
 expenses_except_tax_avg=$(echo "$expenses_except_tax" | tail -n 1 | sed -e 's/^[ \t]*//')
 expenses_except_tax_total=$(echo "$expenses_except_tax" | tail -n 2 | head -n 1 | sed -e 's/^[ \t]*//')
 
 income_after_expenses=$(\
-ledger bal "/^Revenues/" "/^Expenses/" -X $ \
--f ${LEDGER_FILE} --price-db ${LEDGER_PRICES} \
+ledger bal "/^Revenues/" "/^Expenses/" \
 --now $NOW -b "$YEAR/01/01" -e $END -c \
 --balance-format "%(abs(quantity(display_total)))\n%(abs(quantity(display_total / $MONTH)))\n" \
 | tail -n 2 \

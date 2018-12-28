@@ -1,8 +1,10 @@
 #!/bin/bash
 # Last modified: 2016/12/03 01:31:16 UTC
 
-# source "$HOME/Dropbox/projects/ledger-reports/helpers.sh"
-source "${LEDGERSCRIPTS_REPORTS_DIR}/helpers.sh"
+
+export cwd="$(dirname $0)"
+
+source "$cwd/helpers.sh"
 
 #
 # Parse date (if passed in as argument)
@@ -52,9 +54,18 @@ export until_date="$until_year/$until_month/01"
 
 
 #
-# Create directory structure
+# CREATE DIRECTORY STRUCTURE
 #
-. "${LEDGERSCRIPTS_REPORTS_DIR}/directory.sh"
+# Create the year directory first
+# This way we can organize by ~/year/month/
+#
+export year_dir="${LEDGER_REPORTS_OUTPUT_DIR}/FY${year}"
+create_dir $year_dir
+
+export month_dir="$year_dir/$month_long"
+create_dir $month_dir
+
+# . "${LEDGERSCRIPTS_REPORTS_DIR}/directory.sh"
 # . "$HOME/Dropbox/projects/ledger-reports/directory.sh"
 
 
@@ -73,9 +84,9 @@ export until_date="$until_year/$until_month/01"
 # done
 echo "YEAR: ${year}"
 echo "MONTH: ${month}"
-echo "${month_dir}"
+echo "OUTPUT: ${month_dir}"
 
-for script in $LEDGERSCRIPTS_REPORTS_DIR/reports.monthly/*
+for script in "$cwd"/reports.monthly/*
 do
     if [[ -f $script ]]
     then

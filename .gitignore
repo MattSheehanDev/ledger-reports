@@ -12,5 +12,7 @@
 .bashrc
 
 
+**/.DS_Store
 reports.deprecated/**/*
+test.sh
 
