@@ -4,45 +4,45 @@
 echo -n -e $startBlue"Starting cash flow reports..."$endColor
 
 
-echo "$($(pwd)/reports.fi/cash-flow.sh)" \
+echo "$($cwd/reports.fi/cash-flow.sh)" \
 > "${month_dir}/cash-flow.txt"
 
 check_last_result
 
 
-echo "$($(pwd)/reports.fi/cash-flow-market.sh)" \
+echo "$($cwd/reports.fi/cash-flow-market.sh)" \
 > "${month_dir}/cash-flow-market.txt"
 
 check_last_result
 
 
-echo "$($(pwd)/reports.fi/revenue-ytd.sh)" \
+echo "$($cwd/reports.fi/revenue-ytd.sh)" \
 > "${month_dir}/revenues-ytd.txt"
 
 check_last_result
 
 
 
-echo "$($(pwd)/reports.fi/expense-ytd.sh)" \
+echo "$($cwd/reports.fi/expense-ytd.sh)" \
 > "${month_dir}/expenses-ytd.txt"
 
 check_last_result
 
 
 
-echo "$($(pwd)/reports.fi/gasoline-ytd.sh)" \
+echo "$($cwd/reports.fi/gasoline-ytd.sh)" \
 > "${month_dir}/gasoline-ytd.txt"
 
 check_last_result
 
 
-echo "$($(pwd)/reports.fi/savings-rate.sh)" \
+echo "$($cwd/reports.fi/savings-rate.sh)" \
 > "${month_dir}/savings-rate.txt"
 
 check_last_result
 
 
-echo "$($(pwd)/reports.fi/drawdown.sh)" \
+echo "$($cwd/reports.fi/drawdown.sh)" \
 > "${month_dir}/drawdown.txt"
 
 check_last_result

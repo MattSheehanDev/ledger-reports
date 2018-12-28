@@ -1,8 +1,10 @@
 #!/bin/bash
 # Last modified: 2016/12/03 01:31:16 UTC
 
-# source "$HOME/Dropbox/projects/ledger-reports/helpers.sh"
-source "${LEDGERSCRIPTS_REPORTS_DIR}/helpers.sh"
+
+export cwd="$(dirname $0)"
+
+source "$cwd/helpers.sh"
 
 #
 # Parse date (if passed in as argument)
@@ -82,9 +84,9 @@ create_dir $month_dir
 # done
 echo "YEAR: ${year}"
 echo "MONTH: ${month}"
-echo "${month_dir}"
+echo "OUTPUT: ${month_dir}"
 
-for script in $LEDGERSCRIPTS_REPORTS_DIR/reports.monthly/*
+for script in "$cwd"/reports.monthly/*
 do
     if [[ -f $script ]]
     then
