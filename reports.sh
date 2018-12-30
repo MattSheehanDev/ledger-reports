@@ -65,23 +65,13 @@ create_dir $year_dir
 export month_dir="$year_dir/$month_long"
 create_dir $month_dir
 
-# . "${LEDGERSCRIPTS_REPORTS_DIR}/directory.sh"
-# . "$HOME/Dropbox/projects/ledger-reports/directory.sh"
 
 
-
-# ##
-# ## Ledger reports
-# ## run each executable in the reports.monthly directory,
-# ## including subdirectories
-# ##
-# # for i in $(find /home/matt/Dropbox/projects/ledger-reports/reports.monthly); do
-# for i in $(find "${LEDGERSCRIPTS_REPORTS_DIR}/reports.monthly/core"); do
-#   if [[ -d "$i" ]]; then
-#     run-parts --exit-on-error --new-session "$i"
-#     # run-parts --exit-on-error --new-session "$i"
-#   fi
-# done
+##
+## Ledger reports
+## run each executable in the reports.monthly directory,
+## including subdirectories
+##
 echo "YEAR: ${year}"
 echo "MONTH: ${month}"
 echo "OUTPUT: ${month_dir}"
@@ -94,41 +84,11 @@ do
     fi
 done
 
-# # ## Graphs
-# # for i in $(find /home/matt/Dropbox/projects/ledger-reports/reports.graph); do
-# #   if [[ -d "$i" ]]; then
-# #     # run-parts --exit-on-error "$i" > "${month_dir}${GRAPH_NAME}"
-# #     # PARTS=($(run-parts --exit-on-error "$i"))
-# #     for l in $(run-parts --exit-on-error --list "$i"); do
-# #         # "$l" > "${month_dir}${GRAPH_NAME}"
-# #         echo $l
-# #     done
-# #     # run-parts --exit-on-error --new-session "$i"
-# #   else
-# #     # echo $i
-# #     T=`source "$i"`
-# #     echo T > "${month_dir}${GRAPH_NAME}"
-# #   fi
-# # done
-
-# echo -n -e "${startBlue}income area graph...${endColor}"
-# bash "${LEDGERSCRIPTS_REPORTS_DIR}reports.graph/income-area-plot.sh" \
-# >| "${graph_dir}income-area-graph.svg"
-# echo -e "${startGreenBold}DONE${endColor}"
-
-# echo -n -e "${startBlue}income bar graph...${endColor}"
-# bash "${LEDGERSCRIPTS_REPORTS_DIR}reports.graph/income-bar-plot.sh" \
-# >| "${graph_dir}income-bar-graph.svg"
-# echo -e "${startGreenBold}DONE${endColor}"
-
-# echo -n -e "${startBlue}net-worth area graph...${endColor}"
-# bash "${LEDGERSCRIPTS_REPORTS_DIR}reports.graph/net-worth-area-plot.sh" \
-# >| "${graph_dir}net-worth-area-graph.svg"
-# echo -e "${startGreenBold}DONE${endColor}"
-
-# echo -n -e "${startBlue}monthly expenses histogram...${endColor}"
-# bash "${LEDGERSCRIPTS_REPORTS_DIR}reports.graph/expenses-histogram.sh" \
-# >| "${graph_dir}monthly-expenses-histogram.svg"
-# echo -e "${startGreenBold}DONE${endColor}"
+# for i in $(find "${LEDGERSCRIPTS_REPORTS_DIR}/reports.monthly"); do
+#   if [[ -d "$i" ]]; then
+#     run-parts --exit-on-error --new-session "$i"
+#     # run-parts --exit-on-error --new-session "$i"
+#   fi
+# done
 
 exit 0

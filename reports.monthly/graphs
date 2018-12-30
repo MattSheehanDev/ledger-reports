@@ -11,25 +11,17 @@ create_dir $graph_dir
 echo "$($cwd/reports.graph/expenses-histogram.sh)" \
 > "${graph_dir}/monthly-expenses_histogram.svg"
 
-check_last_result
-
 
 echo "$($cwd/reports.graph/cash-flow-area.sh)" \
 > "${graph_dir}/cash-flow_area-graph.svg"
-
-check_last_result
 
 
 echo "$($cwd/reports.graph/cash-flow-bar.sh)" \
 > "${graph_dir}/cash-flow_bar-graph.svg"
 
-check_last_result
-
 
 echo "$($cwd/reports.graph/net-worth-area.sh)" \
 > "${graph_dir}/net-worth_area-graph.svg"
-
-check_last_result
 
 
 echo -e $startGreenBold"DONE"$endColor

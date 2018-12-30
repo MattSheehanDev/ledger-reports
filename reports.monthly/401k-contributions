@@ -9,15 +9,18 @@ echo -n -e $startBlue"Starting 401k contributions..."$endColor
 
 ledger reg "^Assets:Portfolio:Paychex:401k" --limit "tag(\"TYPE\")=='TRADITIONAL'" \
 -b $BEGIN -e $END \
-> "${month_dir}/401k-traditional-contributions.txt"
+> "${month_dir}/401k-contributions-ytd-traditional.txt"
 
-check_last_result
 
 ledger reg "^Assets:Portfolio:Paychex:401k" --limit "tag(\"TYPE\")=='MATCH'" \
 -b $BEGIN -e $END \
-> "${month_dir}/401k-match-contributions.txt"
+> "${month_dir}/401k-contributions-ytd-match.txt"
 
-check_last_result
+
+ledger bal "^Assets:Portfolio:Paychex:401k" --pivot TYPE \
+--limit "tag(\"TYPE\")" -b $BEGIN -e $END \
+> "${month_dir}/401k-contributions-ytd.txt"
+
 
 echo -e $startGreenBold"DONE"$endColor
 

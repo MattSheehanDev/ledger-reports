@@ -1,8 +1,5 @@
 #!/bin/bash
 
-LEDGER_FILE="$HOME/Dropbox/journals/finances/accounting/ledger/data/general.ledger"
-LEDGER_PRICES="$HOME/Dropbox/journals/finances/accounting/ledger/data/prices.ledger"
-
 YEAR=2017
 MONTH=06
 
@@ -12,7 +9,7 @@ NOW="2017/06/30"
 
 
 net_worth=$(\
-ledger bal "^Assets" "^Liabilities" -X $ --price-db ${LEDGER_PRICES} -f ${LEDGER_FILE} \
+ledger bal "^Assets" "^Liabilities" \
 --now ${NOW} -e ${END} --current \
 --balance-format "%(quantity(display_total))\n" \
 | tail -n 1 | sed -e 's/^[ \t]*//' \
@@ -33,9 +30,8 @@ printf "$pformat" "Daily" "Monthly" "Annually" "Savings required" ""
 printf '=%.0s' {1..80}
 printf "\n"
 
-annual_expenses=$(ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" -X $ \
--f ${LEDGER_FILE} --price-db ${LEDGER_PRICES} --no-total \
---now $NOW -b "$YEAR/01/01" -e $END --current \
+annual_expenses=$(ledger bal "/^Expenses:(?!Tax|Deductions)/" "/^Expenses:Tax:Sales/" \
+--no-total --now $NOW -b "$YEAR/01/01" -e $END --current \
 --balance-format "\
 %-12((abs(display_total / $MONTH) * 12) / 365)\
 %-12((abs(display_total / $MONTH) * 12) / 12)\
