@@ -1,8 +1,8 @@
 #!/bin/bash
 
 
-# END="2017/07/01"
-# NOW="2017/06/30"
+# END="2020/05/01"
+# NOW="2020/04/30"
 
 
 END="${until_date}"
@@ -12,7 +12,7 @@ NOW="${now_date}"
 total_rewards_dirty=$(\
 ledger bal "/^Assets:Bank:(Discover:Cashback|Huntington:Voice Points|Citi:Cashback)/" \
 -e $END --now $NOW -c -R \
-| tail -n 1 | sed -e 's/^[ \t]*//' \
+| tail -n 1 | sed -e 's/^[ \t]*//' | awk '{print $1}' \
 )
 total_rewards=$(echo $total_rewards_dirty | sed 's/[,$-]//g')
 
