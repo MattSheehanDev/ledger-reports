@@ -5,7 +5,9 @@ Scripts are tested with
 - macOS Mojave 12.6
 - ledger-cli version 3.2.1
 - gnuplot version 5.4 patchlevel 4
-- bash version 5.1.16 and zsh version 5.9
+- shells
+  - bash version 5.1.16
+  - zsh version 5.9
 
 ### Setup
 
