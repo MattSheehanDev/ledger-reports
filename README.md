@@ -2,10 +2,10 @@
 
 Scripts are tested with
 
-- macOS Mojave 10.14
-- ledger-cli version 3.1.1
-- gnuplot version 5.2 patchlevel 5
-- bash version 4.4.23
+- macOS Mojave 12.6
+- ledger-cli version 3.2.1
+- gnuplot version 5.4 patchlevel 4
+- bash version 5.1.16 and zsh version 5.9
 
 ### Setup
 
@@ -22,13 +22,13 @@ In order to run any of the reports, some flags need to be set in your local `~/.
 The global variable `LEDGER_REPORTS_OUTPUT_DIR` has to be set too. This is probably easiest if stored in your .bash_profile.
 ```sh
 # The directory where the reports script will output to
-LEDGER_REPORTS_OUTPUT_DIR="~/path/to/ledger/reports/output"
+LEDGER_REPORTS_OUTPUT_DIR="$HOME/path/to/ledger/reports/output"
 ```
 
 Optionally, I like to alias the entry point.
 
 ```bash
-alias ledreports="~/path/to/reports.sh"
+alias ledreports="$HOME/path/to/reports.sh"
 ```
 
 
