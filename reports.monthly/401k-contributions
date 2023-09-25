@@ -7,17 +7,17 @@ END="${next_year}/01/01"
 
 echo -n -e $startBlue"Starting 401k contributions..."$endColor
 
-ledger reg "^Assets:Portfolio:American Funds:401k" --limit "tag(\"TYPE\")=='TRADITIONAL'" \
+ledger reg "^Assets:Portfolio:American Funds:401k|^Assets:Portfolio:John Hancock:401k" --limit "tag(\"TYPE\")=='TRADITIONAL'" \
 -b $BEGIN -e $END \
 > "${month_dir}/401k-contributions-ytd-traditional.txt"
 
 
-ledger reg "^Assets:Portfolio:American Funds:401k" --limit "tag(\"TYPE\")=='MATCH'" \
+ledger reg "^Assets:Portfolio:American Funds:401k|^Assets:Portfolio:John Hancock:401k" --limit "tag(\"TYPE\")=='MATCH'" \
 -b $BEGIN -e $END \
 > "${month_dir}/401k-contributions-ytd-match.txt"
 
 
-ledger bal "^Assets:Portfolio:American Funds:401k" --pivot TYPE \
+ledger bal "^Assets:Portfolio:American Funds:401k|^Assets:Portfolio:John Hancock:401k" --pivot TYPE \
 --limit "tag(\"TYPE\")" -b $BEGIN -e $END \
 > "${month_dir}/401k-contributions-ytd.txt"
 
